@@ -1,0 +1,26 @@
+[
+  {
+    "id": "demo-upi-001",
+    "contentType": "TEXT",
+    "content": "DEMO ONLY: Enter your UPI PIN to receive this cashback reward.",
+    "expectedIndicator": "UPI fraud warning may be raised",
+    "expectedSafetyNote": "A UPI PIN is not needed to receive money. Never share or enter it at another person's request.",
+    "containsPersonalData": false
+  },
+  {
+    "id": "demo-impersonation-001",
+    "contentType": "TEXT",
+    "content": "DEMO ONLY: A CBI officer says this is a digital arrest and demands an immediate transfer.",
+    "expectedIndicator": "Law-enforcement impersonation warning may be raised",
+    "expectedSafetyNote": "Do not transfer money under pressure. Independently contact the relevant authority using an official channel.",
+    "containsPersonalData": false
+  },
+  {
+    "id": "demo-benign-001",
+    "contentType": "TEXT",
+    "content": "DEMO ONLY: Your library book is due next week. Please return it at the front desk.",
+    "expectedIndicator": "No listed indicator expected; this does not establish that a message is safe",
+    "expectedSafetyNote": "Verify unexpected requests through a contact method you already trust.",
+    "containsPersonalData": false
+  }
+]

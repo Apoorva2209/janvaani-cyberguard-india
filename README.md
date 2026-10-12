@@ -99,6 +99,24 @@ The web workspace uses port 3001 and the API uses port 3000 by default. Set up t
 
 For more detail, see [mobile build instructions](packages/mobile/docs/BUILD_INSTRUCTIONS.md), [integration notes](packages/mobile/docs/INTEGRATIONS.md), [demo script](packages/mobile/docs/DEMO_SCRIPT.md), [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md), and [threat model](packages/mobile/docs/THREAT_MODEL.md).
 
+## Submission and reviewer materials
+
+- [Technical design and architecture diagram](docs/ARCHITECTURE.md)
+- [Fictional sample cases](docs/sample-cases.json) (contains no real phone numbers, accounts, or citizen messages)
+- [MIT License](LICENSE)
+- Automated backend rule-engine tests: `packages/backend/src/detection/rules.test.ts`
+
+Run the backend unit tests with `npm test -w packages/backend`. The root `test`
+script runs workspace tests where configured; packages without a test script
+are not covered by that command. The GitHub Actions workflow also runs
+dependency/security checks, but a configured workflow is not evidence that its
+latest run passed. Check the repository's Actions tab for the actual run state.
+
+This repository does not include the competition's official presentation
+template, a recorded 3–5 minute video, or a verified enrollment certificate.
+Those must be prepared and uploaded separately by the team. Do not represent
+them as included here.
+
 ### Local containers: caution
 
 The Compose file contains development defaults for local experimentation. Replace every default password with a unique development-only value before running it, keep the services bound to trusted local interfaces, and never reuse those values in a shared or production environment. Review the Compose file and the environment templates before starting containers.
