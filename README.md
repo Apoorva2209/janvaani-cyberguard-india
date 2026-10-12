@@ -1,32 +1,135 @@
-# JanVaani CyberGuard India
+# JanVaani — Cyber Safety for India
 
-JanVaani is an India-first mobile and web prototype for checking suspicious calls, messages, links, and media. It provides explainable risk indicators and safety guidance; it does not guarantee detection, identify a caller, or represent a Government of India service.
+JanVaani is a cross-platform app and service prototype for helping people assess suspicious calls, SMS/WhatsApp messages, links, and media. It is designed around a simple idea: show people the warning signs, explain why they matter, and give them a safer next step.
 
-## Project layout
+The project takes inspiration from the citizen participation and learning journeys of MY Bharat and Skill India. It is an independent project: it is not operated, approved, or endorsed by those platforms or by the Government of India.
 
-- `packages/mobile` — Expo / React Native app for Android and iOS
-- `packages/frontend` — Next.js web interface
-- `packages/backend` — API, detection pipeline, auth, privacy, and upload handling
-- `packages/shared` — shared types
-- `packages/mobile/docs` — build notes, demo script, integrations, privacy notice, and threat model
+> **Prototype notice:** JanVaani does not guarantee that it will detect every scam, prove that content is true or false, or identify the real person behind a caller ID or phone number. Do not rely on a result as the sole basis for a financial, emergency, or legal decision.
 
-## Requirements
+## The problem
+
+Fraud attempts often impersonate banks, UPI services, police, government departments, delivery companies, or family members. They may pressure someone to act quickly, reveal an OTP or UPI PIN, install a remote-access app, or send money. Language barriers and confusing technical warnings can make it harder to assess a message safely.
+
+JanVaani aims to make the first check understandable: users choose the kind of content they received, provide the text or a description, and receive possible risk indicators with practical safety guidance. Where evidence is missing, the app should say so rather than label a message as definitively genuine or fake.
+
+## What is in this repository
+
+| Package | Purpose | Current state |
+| --- | --- | --- |
+| `packages/mobile` | Android/iOS app built with Expo and React Native | Home, checker, learning, helpline, privacy, and language-picker screens; English and Hindi translation dictionaries; other catalogued languages use an English fallback |
+| `packages/frontend` | Next.js web interface | Separate web client for the project; not a native mobile build |
+| `packages/backend` | Fastify API in TypeScript | API routes and modules for checks, authentication, administration, privacy, uploads, and detection orchestration |
+| `packages/shared` | Shared TypeScript types | Types used across workspaces |
+| `docker-compose.yml` | Local service definitions | PostgreSQL, Redis, MinIO, ClamAV, API, and web services for development experiments |
+| `packages/mobile/docs` | Supporting project documents | Build notes, demo script, integration status, privacy notice, and threat model |
+
+## How a check works
+
+1. The user selects a content type and enters a message, a call description, a link, or a media description.
+2. The mobile demo runs local heuristic rules against the supplied text and optional claimed-sender details.
+3. The result displays possible warning indicators and a safety explanation. A lack of detected indicators does **not** prove that content is safe.
+4. For suspected financial cyber fraud in India, the app points users to the official [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/) and the 1930 helpline.
+
+The repository also contains a backend detection pipeline and integration adapters. Their presence in source code does not mean every external service is connected, available, or independently validated.
+
+## Detection and integration status
+
+| Capability | Status in this codebase |
+| --- | --- |
+| Text-based scam indicators | Local heuristic/rule-based screening is present; it can miss new scams and flag innocent content |
+| Caller identity lookup | Not provided; caller ID and supplied numbers may be spoofed |
+| Language picker | Registry includes the 22 Scheduled Languages and English; full interface translation is currently present for English and Hindi only |
+| BHASHINI | Backend adapter exists, but real use requires valid service access/configuration and end-to-end verification |
+| URL reputation | Backend module exists; confirm provider configuration and live-service behavior before relying on it |
+| Deepfake / media authenticity | Not a guaranteed live detection feature; do not treat a file upload or score as proof |
+| Official-source matching | Backend/source modules exist; confirm the current source data, refresh schedule, and evidence display before deployment |
+| Upload scanning/storage | Integration code and local service definitions exist; security, retention, and end-to-end behavior still require validation |
+
+Treat `packages/mobile/docs/INTEGRATIONS.md` as an implementation inventory to verify, not as independent evidence that every listed service is live in a deployed environment.
+
+## Technology
+
+- **Mobile:** React Native 0.74, Expo SDK 51, TypeScript
+- **Web:** Next.js 14, React, TypeScript
+- **API:** Node.js 20+, Fastify 4, TypeScript
+- **Data and local services:** PostgreSQL with Prisma, Redis, MinIO-compatible object storage, ClamAV
+- **Language integration path:** BHASHINI adapter on the backend; provider credentials must stay server-side
+- **Automation:** GitHub Actions workflow for checks and security-oriented scanning
+
+These are the technologies configured in this repository; they do not imply production readiness or certification.
+
+## Run locally
+
+### Requirements
 
 - Node.js 20 or later and npm
-- Docker Desktop for the optional local database/cache services
-- Expo tooling for mobile development; platform build requirements apply for native builds
+- Docker Desktop only if you want to try the services in `docker-compose.yml`
+- Android Studio / Android SDK for local Android emulator builds
+- macOS and Xcode for local iOS builds; alternatively use a correctly configured Expo/EAS build environment
 
-## Getting started
+### Install dependencies
 
-1. Copy the relevant `.env.example` files to local `.env` files and set development-only values. Never commit `.env` files or production credentials.
-2. Install dependencies from the repository root with `npm ci`.
-3. Start the web and API workspaces with `npm run dev`.
-4. Start the mobile app with `npm run mobile:start`; use `npm run mobile:android` for an Android development device/emulator.
+From the repository root:
 
-Review `packages/mobile/docs/BUILD_INSTRUCTIONS.md` and `packages/mobile/docs/INTEGRATIONS.md` for platform and service notes. BHASHINI, reputation, and media-analysis services require separately configured credentials and must remain server-side.
+```bash
+npm ci
+```
 
-## Safety and status
+### Start the app
 
-Detection results are preliminary indicators, not proof that content is genuine or fraudulent. Files are not guaranteed to be analyzed unless a real detector is configured. Verify important claims through independently located official sources. In India, financial cyber fraud can be reported at [cybercrime.gov.in](https://cybercrime.gov.in/) or by calling 1930.
+Start the mobile development server:
 
-This repository is a prototype and has not been independently security-certified. Review the threat model, retention settings, access controls, and integrations before any real-world deployment.
+```bash
+npm run mobile:start
+```
+
+For a connected Android emulator/device with its native toolchain installed:
+
+```bash
+npm run mobile:android
+```
+
+Start the web frontend and API together:
+
+```bash
+npm run dev
+```
+
+The web workspace uses port 3001 and the API uses port 3000 by default. Set up the relevant local environment files from the provided `.env.example` templates before starting services that require configuration. Never commit `.env` files, access tokens, signing keys, or production credentials.
+
+For more detail, see [mobile build instructions](packages/mobile/docs/BUILD_INSTRUCTIONS.md), [integration notes](packages/mobile/docs/INTEGRATIONS.md), [demo script](packages/mobile/docs/DEMO_SCRIPT.md), [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md), and [threat model](packages/mobile/docs/THREAT_MODEL.md).
+
+### Local containers: caution
+
+The Compose file contains development defaults for local experimentation. Replace every default password with a unique development-only value before running it, keep the services bound to trusted local interfaces, and never reuse those values in a shared or production environment. Review the Compose file and the environment templates before starting containers.
+
+## Languages
+
+The mobile language registry lists the 22 Scheduled Languages and English, including native names and script metadata. The shipped translation dictionaries currently cover English and Hindi. Other languages use an English fallback and are marked as not yet human-reviewed. The registry is a foundation for broader language support, not a claim that all Indian languages and dialects are already translated or accurately analyzed.
+
+Safety-critical translations should be reviewed by fluent speakers before public use. Machine translation and speech recognition can make mistakes, especially with code-mixed speech, dialects, noisy recordings, and uncommon terms.
+
+## Security and privacy
+
+- Do not enter OTPs, UPI PINs, passwords, CVVs, Aadhaar details, or bank login information.
+- Do not upload private documents or media unless you understand where they will be processed and stored.
+- Never put secrets in frontend code or commit local environment files.
+- Treat user-submitted text, links, and files as untrusted input.
+- Review the [threat model](packages/mobile/docs/THREAT_MODEL.md) and [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md) before using this project with real users.
+- The repository has not received an independent security audit, penetration test, or government approval. Configuration and safeguards must be reviewed before deployment.
+
+## Roadmap
+
+1. Validate the mobile and API flows end to end with fictional test cases.
+2. Review English and Hindi safety content and establish a human translation workflow for more Indian languages.
+3. Connect and verify BHASHINI and reputable URL-reputation services through backend adapters.
+4. Add specialist audio/video analysis only with clear user consent, documented limits, and human review for consequential cases.
+5. Complete security, privacy, accessibility, and deployment reviews before any real-world launch.
+
+## Contributing
+
+For a hackathon contribution, describe the user problem, the package changed, how you checked it, and any external service or credential required. Use fictional data in examples. Do not submit real citizens' messages, phone numbers, credentials, or private media.
+
+## Reporting suspected cyber fraud in India
+
+Use the official [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/). For financial cyber fraud, call **1930** as soon as possible. JanVaani is an information aid; it does not file a complaint on the user's behalf.
