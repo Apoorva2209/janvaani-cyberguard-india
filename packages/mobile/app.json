@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "JanVaani - Citizen Cyber Shield",
+    "slug": "janvaani",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A1128"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "in.janvaani.cybershield",
+      "infoPlist": {
+        "NSCameraUsageDescription": "JanVaani requires camera access only when you choose to scan a suspicious QR code or document.",
+        "NSPhotoLibraryUsageDescription": "JanVaani requires photo library access only when you select an image or screenshot for threat analysis.",
+        "NSMicrophoneUsageDescription": "JanVaani requires microphone access only when you choose to test an audio clip for synthetic voice clues."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A1128"
+      },
+      "package": "in.janvaani.cybershield",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "CAMERA",
+        "RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "95873b78-4a74-47d8-aaa0-899ce281339b"
+      }
+    }
+  }
+}

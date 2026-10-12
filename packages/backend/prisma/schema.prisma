@@ -1,0 +1,331 @@
+// ============================================================================
+// CyberGuard India - Production Database Schema
+// ============================================================================
+// Security Architecture Notes:
+// - All tables mapped to snake_case via @@map to prevent SQL identifier collisions.
+// - PII fields (User.email, User.mfaSecret, HumanReview.notes) are encrypted at application level.
+// - Immutable AuditLog with SHA-256 chain (previousHash -> currentHash) for cryptographic integrity.
+// - Explicit foreign key cascades or restricts based on data sovereignty retention rules.
+// - Hardened indexes for high-throughput queries, filtering, and audit compliance.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// Enums
+// ============================================================================
+
+enum Role {
+  ADMIN
+  REVIEWER
+  STAFF
+  USER
+
+  @@map("role_enum")
+}
+
+enum ContentType {
+  TEXT
+  URL
+  IMAGE
+  AUDIO
+  VIDEO
+  DOCUMENT
+
+  @@map("content_type_enum")
+}
+
+enum ReportStatus {
+  PENDING
+  ANALYZING
+  COMPLETED
+  FLAGGED_FOR_REVIEW
+  REVIEWED
+  DELETED
+
+  @@map("report_status_enum")
+}
+
+enum RiskLevel {
+  HIGH
+  MEDIUM
+  LOW
+  NONE
+  ABSTAIN
+
+  @@map("risk_level_enum")
+}
+
+enum ScanStatus {
+  PENDING
+  CLEAN
+  INFECTED
+  ERROR
+
+  @@map("scan_status_enum")
+}
+
+enum HumanReviewDecision {
+  CONFIRMED_THREAT
+  FALSE_POSITIVE
+  INCONCLUSIVE
+  ESCALATED
+
+  @@map("human_review_decision_enum")
+}
+
+enum AuditOutcome {
+  SUCCESS
+  FAILURE
+  DENIED
+
+  @@map("audit_outcome_enum")
+}
+
+enum DataDeletionStatus {
+  REQUESTED
+  VERIFIED
+  PROCESSING
+  COMPLETED
+  CANCELLED
+
+  @@map("data_deletion_status_enum")
+}
+
+// ============================================================================
+// Models
+// ============================================================================
+
+model User {
+  id                String    @id @default(uuid()) @db.Uuid
+  /// Application-level encrypted email address (Deterministic or searchable envelope encryption)
+  email             String    @unique @db.VarChar(512)
+  passwordHash      String    @map("password_hash") @db.VarChar(255)
+  role              Role      @default(USER)
+  /// Encrypted TOTP secret key (AES-256-GCM)
+  mfaSecret         String?   @map("mfa_secret") @db.Text
+  mfaEnabled        Boolean   @default(false) @map("mfa_enabled")
+  /// Argon2id / bcrypt hashes of emergency recovery codes
+  recoveryCodesHash String[]  @default([]) @map("recovery_codes_hash")
+  isActive          Boolean   @default(true) @map("is_active")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt         DateTime? @map("deleted_at") @db.Timestamptz(6)
+  lastLoginAt       DateTime? @map("last_login_at") @db.Timestamptz(6)
+
+  // Relations
+  sessions          Session[]
+  reports           Report[]
+  humanReviews      HumanReview[]
+  consentRecords    ConsentRecord[]
+  deletionRequests  DataDeletionRequest[]
+  createdRules      RuleVersion[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Session {
+  id                String    @id @default(uuid()) @db.Uuid
+  userId            String    @map("user_id") @db.Uuid
+  deviceFingerprint String?   @map("device_fingerprint") @db.VarChar(255)
+  /// Cryptographic SHA-256 hash of user IP address (prevents plain PII IP retention)
+  ipHash            String    @map("ip_hash") @db.VarChar(64)
+  mfaVerified       Boolean   @default(false) @map("mfa_verified")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastActivityAt    DateTime  @default(now()) @map("last_activity_at") @db.Timestamptz(6)
+  expiresAt         DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt         DateTime? @map("revoked_at") @db.Timestamptz(6)
+
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Report {
+  id               String       @id @default(uuid()) @db.Uuid
+  /// Nullable userId allows anonymous fraud verification reports without forced identity tracking
+  userId           String?      @map("user_id") @db.Uuid
+  contentType      ContentType  @map("content_type")
+  status           ReportStatus @default(PENDING)
+  district         String?      @db.VarChar(100)
+  state            String?      @db.VarChar(100)
+  languageDetected String?      @map("language_detected") @db.VarChar(10)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  /// Automatic data retention purge timestamp (e.g., 30 days retention policy)
+  expiresAt        DateTime     @map("expires_at") @db.Timestamptz(6)
+  deletedAt        DateTime?    @map("deleted_at") @db.Timestamptz(6)
+
+  user             User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  uploads          Upload[]
+  analysisResults  AnalysisResult[]
+  humanReviews     HumanReview[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("reports")
+}
+
+model Upload {
+  id                   String     @id @default(uuid()) @db.Uuid
+  reportId             String     @map("report_id") @db.Uuid
+  /// Cryptographically random UUID storage key in S3 bucket (prevents direct object traversal)
+  storageKey           String     @unique @map("storage_key") @db.Uuid
+  originalNameSanitized String    @map("original_name_sanitized") @db.VarChar(255)
+  mimeTypeVerified     String     @map("mime_type_verified") @db.VarChar(100)
+  sizeBytes            BigInt     @map("size_bytes")
+  /// SHA-256 hash for deduplication and malware threat intel lookup
+  sha256Hash           String     @map("sha256_hash") @db.VarChar(64)
+  scanStatus           ScanStatus @default(PENDING) @map("scan_status")
+  scannerVersion       String?    @map("scanner_version") @db.VarChar(50)
+  metadataStripped     Boolean    @default(false) @map("metadata_stripped")
+  uploadedAt           DateTime   @default(now()) @map("uploaded_at") @db.Timestamptz(6)
+  expiresAt            DateTime   @map("expires_at") @db.Timestamptz(6)
+  deletedAt            DateTime?  @map("deleted_at") @db.Timestamptz(6)
+
+  report               Report     @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+  @@index([sha256Hash])
+  @@map("uploads")
+}
+
+model AnalysisResult {
+  id                String    @id @default(uuid()) @db.Uuid
+  reportId          String    @map("report_id") @db.Uuid
+  pipelineVersion   String    @map("pipeline_version") @db.VarChar(50)
+  /// Serialized pipeline stage results [{ stageName, stageVersion, status, confidence, durationMs }]
+  stages            Json      @db.JsonB
+  overallConfidence Float     @map("overall_confidence")
+  riskLevel         RiskLevel @map("risk_level")
+  /// Serialized array of detected threat signals
+  signals           Json      @db.JsonB
+  /// Model limitations explicitly recorded for transparency
+  limitations       String[]  @default([])
+  /// Model versions ledger for reproducibility and forensic audits
+  modelVersions     Json      @map("model_versions") @db.JsonB
+  processingTimeMs  Int       @map("processing_time_ms")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  report            Report    @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+  @@index([riskLevel])
+  @@map("analysis_results")
+}
+
+model HumanReview {
+  id         String              @id @default(uuid()) @db.Uuid
+  reportId   String              @map("report_id") @db.Uuid
+  reviewerId String              @map("reviewer_id") @db.Uuid
+  decision   HumanReviewDecision
+  /// Encrypted reviewer notes (AES-256-GCM)
+  notes      String              @db.Text
+  reviewedAt DateTime            @default(now()) @map("reviewed_at") @db.Timestamptz(6)
+
+  report     Report              @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reviewer   User                @relation(fields: [reviewerId], references: [id], onDelete: Restrict)
+
+  @@index([reportId])
+  @@index([reviewerId])
+  @@map("human_reviews")
+}
+
+model AuditLog {
+  id                 String       @id @default(uuid()) @db.Uuid
+  eventId            String       @unique @map("event_id") @db.Uuid
+  /// Hash of the prior audit record (tamper-evident block-chain audit trail)
+  previousHash       String       @map("previous_hash") @db.VarChar(64)
+  /// SHA-256(previousHash + eventId + action + timestamp + metadata)
+  currentHash        String       @map("current_hash") @db.VarChar(64)
+  actorId            String?      @map("actor_id") @db.Uuid
+  actorRole          String       @map("actor_role") @db.VarChar(50)
+  action             String       @db.VarChar(100)
+  resourceType       String       @map("resource_type") @db.VarChar(100)
+  resourceId         String       @map("resource_id") @db.VarChar(255)
+  ipHash             String       @map("ip_hash") @db.VarChar(64)
+  userAgentSanitized String       @map("user_agent_sanitized") @db.VarChar(255)
+  outcome            AuditOutcome
+  metadata           Json         @default("{}") @db.JsonB
+  createdAt          DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([resourceType, resourceId])
+  @@map("audit_logs")
+}
+
+model ConsentRecord {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  consentType String    @map("consent_type") @db.VarChar(100)
+  version     String    @db.VarChar(50)
+  grantedAt   DateTime  @default(now()) @map("granted_at") @db.Timestamptz(6)
+  withdrawnAt DateTime? @map("withdrawn_at") @db.Timestamptz(6)
+  ipHash      String    @map("ip_hash") @db.VarChar(64)
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("consent_records")
+}
+
+model DataDeletionRequest {
+  id                 String             @id @default(uuid()) @db.Uuid
+  userId             String             @map("user_id") @db.Uuid
+  status             DataDeletionStatus @default(REQUESTED)
+  requestedAt        DateTime           @default(now()) @map("requested_at") @db.Timestamptz(6)
+  verifiedAt         DateTime?          @map("verified_at") @db.Timestamptz(6)
+  completedAt        DateTime?          @map("completed_at") @db.Timestamptz(6)
+  /// DPDPA / statutory cooling-off/grace period timestamp
+  gracePeriodEndsAt  DateTime           @map("grace_period_ends_at") @db.Timestamptz(6)
+
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("data_deletion_requests")
+}
+
+model RuleVersion {
+  id            String    @id @default(uuid()) @db.Uuid
+  version       String    @unique @db.VarChar(50)
+  rules         Json      @db.JsonB
+  activatedAt   DateTime? @map("activated_at") @db.Timestamptz(6)
+  deactivatedAt DateTime? @map("deactivated_at") @db.Timestamptz(6)
+  createdBy     String    @map("created_by") @db.Uuid
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  creator       User      @relation(fields: [createdBy], references: [id], onDelete: Restrict)
+
+  @@index([version])
+  @@map("rule_versions")
+}
+
+model GovernmentAdvisory {
+  id              String   @id @default(uuid()) @db.Uuid
+  sourceUrl       String   @map("source_url") @db.VarChar(1024)
+  retrievalTime   DateTime @default(now()) @map("retrieval_time") @db.Timestamptz(6)
+  publicationDate DateTime @map("publication_date") @db.Timestamptz(6)
+  title           String   @db.VarChar(500)
+  matchedPassage  String?  @map("matched_passage") @db.Text
+  category        String   @db.VarChar(100)
+  isActive        Boolean  @default(true) @map("is_active")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([category])
+  @@index([isActive])
+  @@map("government_advisories")
+}

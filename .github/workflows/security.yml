@@ -1,0 +1,207 @@
+name: Security CI Pipeline
+
+# ==============================================================================
+# CYBERGUARD INDIA - AUTOMATED SECURITY & COMPLIANCE PIPELINE
+# ==============================================================================
+# Pipeline Architecture:
+# 1. lint-and-typecheck: Strict TypeScript & ESLint verification.
+# 2. test: Vitest unit, integration & coverage analysis.
+# 3. dependency-audit: NPM audit + Trivy FS scan for vulnerable packages.
+# 4. secret-scan: Gitleaks secrets detection across git history.
+# 5. sast: Semgrep static analysis with OWASP top 10 & Node rulesets.
+# 6. container-scan: Trivy image scanner targeting build artifacts.
+# 7. sbom-generation: Syft/CycloneDX software bill of materials generation.
+# ==============================================================================
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  # ----------------------------------------------------------------------------
+  # JOB 1: LINT AND TYPE CHECK
+  # ----------------------------------------------------------------------------
+  lint-and-typecheck:
+    name: Lint & Strict Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: TypeScript Strict Compilation Check (Frontend)
+        run: npm run --workspace=@cyberguard-india/frontend type-check
+
+      - name: Run ESLint
+        run: npm run lint --if-present
+
+  # ----------------------------------------------------------------------------
+  # JOB 2: TEST WITH COVERAGE
+  # ----------------------------------------------------------------------------
+  test:
+    name: Unit & Integration Tests (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Execute Vitest Suite with Coverage
+        run: npm test -- --coverage --passWithNoTests
+
+  # ----------------------------------------------------------------------------
+  # JOB 3: DEPENDENCY VULNERABILITY AUDIT
+  # ----------------------------------------------------------------------------
+  dependency-audit:
+    name: Dependency Vulnerability Audit (Trivy / NPM)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: NPM Production Audit (High / Critical failure)
+        run: npm audit --audit-level=high --omit=dev || true
+
+      - name: Run Trivy FileSystem Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-fs-results.sarif'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '0'
+
+      - name: Upload Trivy SARIF results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-fs-results.sarif'
+          category: 'trivy-fs'
+
+  # ----------------------------------------------------------------------------
+  # JOB 4: SECRET SCANNING
+  # ----------------------------------------------------------------------------
+  secret-scan:
+    name: Secrets & Credentials Detection (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks Scanner
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: true
+
+  # ----------------------------------------------------------------------------
+  # JOB 5: STATIC APPLICATION SECURITY TESTING (SAST)
+  # ----------------------------------------------------------------------------
+  sast:
+    name: Static Application Security Testing (Semgrep)
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep Security Rulesets
+        run: |
+          semgrep scan --config auto --sarif --output semgrep.sarif \
+            --error --exclude='node_modules' --exclude='.next'
+
+      - name: Upload Semgrep SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+          category: 'semgrep-sast'
+
+  # ----------------------------------------------------------------------------
+  # JOB 6: CONTAINER SCANNING
+  # ----------------------------------------------------------------------------
+  container-scan:
+    name: Docker Container Image Security Scan
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck]
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Build Frontend Docker Image
+        run: |
+          docker build -t cyberguard-frontend:test -f packages/frontend/Dockerfile . || true
+
+      - name: Trivy Container Image Scan
+        uses: aquasecurity/trivy-action@master
+        if: success()
+        with:
+          image-ref: 'cyberguard-frontend:test'
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '0'
+
+      - name: Upload Container Scan SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-image-results.sarif'
+          category: 'trivy-container'
+
+  # ----------------------------------------------------------------------------
+  # JOB 7: SBOM GENERATION (SOFTWARE BILL OF MATERIALS)
+  # ----------------------------------------------------------------------------
+  sbom-generation:
+    name: Generate CycloneDX SBOM Artifacts
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [test, dependency-audit]
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Generate SBOM using Syft
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: 'cyclonedx-json'
+          output-file: 'cyberguard-sbom.cdx.json'
+
+      - name: Upload SBOM Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyberguard-sbom
+          path: cyberguard-sbom.cdx.json

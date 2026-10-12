@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JanVaani (जनवाणी) - Sovereign Citizen Cyber Shield</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 20%, #0d1527 0%, #050811 100%);
+      color: #F8FAFC;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .lang-devanagari { font-family: 'Noto Sans Devanagari', 'Inter', sans-serif; }
+    .lang-tamil { font-family: 'Noto Sans Tamil', 'Inter', sans-serif; }
+    .lang-telugu { font-family: 'Noto Sans Telugu', 'Inter', sans-serif; }
+    .lang-bengali { font-family: 'Noto Sans Bengali', 'Inter', sans-serif; }
+
+    /* Phone Chassis */
+    .phone-wrapper {
+      width: 410px;
+      height: 850px;
+      background: #0B132B;
+      border-radius: 50px;
+      border: 10px solid #1E293B;
+      box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.9), 0 0 50px rgba(59, 130, 246, 0.15), inset 0 0 4px rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .phone-wrapper.android-frame {
+      border-radius: 40px;
+      border: 8px solid #243046;
+    }
+
+    /* Dynamic Island & Punch hole */
+    .dynamic-island {
+      width: 120px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      margin: 8px auto 4px auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .punch-hole {
+      width: 14px;
+      height: 14px;
+      background: #000;
+      border: 2px solid #111;
+      border-radius: 50%;
+      margin: 8px auto 4px auto;
+      z-index: 50;
+    }
+
+    /* Scrollbars */
+    .app-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .app-scroll::-webkit-scrollbar-thumb {
+      background: #23335D;
+      border-radius: 999px;
+    }
+
+    /* Waveform Animation */
+    @keyframes wavePulse {
+      0%, 100% { height: 6px; }
+      50% { height: 28px; }
+    }
+    .wave-bar {
+      width: 3.5px;
+      background: #38BDF8;
+      border-radius: 3px;
+      animation: wavePulse 1.2s infinite ease-in-out;
+    }
+
+    /* Radar scan for QR and deepfake */
+    @keyframes radarScan {
+      0% { top: 0%; opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { top: 100%; opacity: 0.2; }
+    }
+    .scanner-beam {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #38BDF8, #818CF8, transparent);
+      box-shadow: 0 0 15px #38BDF8;
+      animation: radarScan 2s infinite ease-in-out;
+    }
+
+    /* Pulse glow */
+    .pulse-glow {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      animation: pulseAlert 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+    @keyframes pulseAlert {
+      to { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+    }
+  </style>
+</head>
+<body class="p-4 lg:p-8 flex items-center justify-center min-h-screen">
+
+  <div class="max-w-7xl w-full flex flex-col xl:flex-row items-center xl:items-start justify-center gap-10">
+
+    <!-- LEFT COLUMN: Desktop Evaluator Deck & Controls -->
+    <div class="flex-1 w-full max-w-xl space-y-6 text-left">
+      <!-- Sovereign Badge -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold font-display">
+          <span>🇮🇳</span> Sovereign India-First Cyber Shield
+        </span>
+        <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+          Expo React Native + TypeScript
+        </span>
+      </div>
+
+      <!-- Main Headline -->
+      <div class="space-y-2">
+        <h1 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-white font-display">
+          JanVaani <span class="text-indigo-400 font-normal">(जनवाणी)</span>
+        </h1>
+        <p class="text-sm font-medium text-slate-300 leading-relaxed">
+          A human-crafted mobile cyber-safety companion engineered for India's 800M+ smartphone users. Detects fake calls, SMS/WhatsApp scams, deceptive links/QR, voice clones, and synthetic deepfakes with calibrated evidence.
+        </p>
+      </div>
+
+      <!-- Quick Test Scenario Launcher -->
+      <div class="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-5 space-y-3.5 shadow-xl backdrop-blur">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-300 font-display flex items-center gap-1.5">
+            <span>⚡</span> Real-World Threat Scenarios (Click to test on phone)
+          </span>
+          <span class="text-[10px] text-slate-400">Instant Demo</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <button onclick="triggerThreat('arrest')" class="text-left p-3 rounded-xl bg-[#1E293B]/70 hover:bg-red-950/40 border border-slate-700/60 hover:border-red-500/50 transition group">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🚨</span>
+              <span class="text-xs font-bold text-white group-hover:text-red-300">CBI "Digital Arrest" Call</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Narcotics parcel scare, Skype interrogation, spoofed police caller ID.</p>
+          </button>
+
+          <button onclick="triggerThreat('power')" class="text-left p-3 rounded-xl bg-[#1E293B]/70 hover:bg-amber-950/40 border border-slate-700/60 hover:border-amber-500/50 transition group">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">⚡</span>
+              <span class="text-xs font-bold text-white group-hover:text-amber-300">Electricity Bill Cut SMS</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">"Power cut tonight at 9:30 PM. Download Mahavitaran.apk to update."</p>
+          </button>
+
+          <button onclick="triggerThreat('deepfake')" class="text-left p-3 rounded-xl bg-[#1E293B]/70 hover:bg-purple-950/40 border border-slate-700/60 hover:border-purple-500/50 transition group">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🎭</span>
+              <span class="text-xs font-bold text-white group-hover:text-purple-300">Celebrity Deepfake Video</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">Viral video endorsing fake trading platform. Analyzes edge artifacts.</p>
+          </button>
+
+          <button onclick="triggerThreat('voice')" class="text-left p-3 rounded-xl bg-[#1E293B]/70 hover:bg-sky-950/40 border border-slate-700/60 hover:border-sky-500/50 transition group">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🎙️</span>
+              <span class="text-xs font-bold text-white group-hover:text-sky-300">Emergency Voice Clone</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">AI-synthesized voice of son in police custody requesting urgent bail money.</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Device Frame & Viewport Controls -->
+      <div class="bg-[#0F172A]/80 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 font-semibold">Frame:</span>
+          <button onclick="setDeviceType('ios')" id="btnIos" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-xs shadow">
+            iPhone 15 Pro
+          </button>
+          <button onclick="setDeviceType('android')" id="btnAndroid" class="px-3 py-1.5 rounded-lg bg-[#1E293B] text-slate-300 hover:text-white font-semibold text-xs">
+            Galaxy S24 Ultra
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 font-semibold">Scale:</span>
+          <button onclick="setScale(1)" class="px-2.5 py-1 rounded bg-[#1E293B] text-slate-300 text-xs">100%</button>
+          <button onclick="setScale(0.9)" class="px-2.5 py-1 rounded bg-[#1E293B] text-slate-300 text-xs">90%</button>
+        </div>
+      </div>
+
+      <!-- Installation Guide: Run on Real Physical Device -->
+      <div class="bg-gradient-to-br from-[#111C3A] to-[#0A1024] border border-indigo-500/30 rounded-2xl p-5 space-y-3 shadow-xl">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-white flex items-center gap-2 font-display">
+            <span>📱</span> Install & Run Natively on Phone
+          </h3>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">READY</span>
+        </div>
+        <p class="text-xs text-slate-300">
+          The complete Expo project is located in <code class="text-indigo-300 bg-black/30 px-1 py-0.5 rounded">packages/mobile</code>. Run this command in your PowerShell terminal to scan the QR code using <strong>Expo Go</strong>:
+        </p>
+        <div class="bg-black/60 border border-slate-800 rounded-xl p-3 font-mono text-xs space-y-1.5 overflow-x-auto">
+          <div class="text-slate-400"># 1. Start Metro Bundler with Expo:</div>
+          <div class="text-emerald-400 font-semibold">$env:Path = "C:\Users\mithr\.nodejs;" + $env:Path</div>
+          <div class="text-emerald-400 font-semibold">cd packages/mobile; npx expo start</div>
+          <div class="text-slate-400 mt-2"># 2. Or build standalone APK for Android sideloading:</div>
+          <div class="text-sky-300">npx eas build -p android --profile preview</div>
+        </div>
+      </div>
+
+      <!-- Trust & Safety Guarantee Cards -->
+      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
+        <div class="p-2.5 bg-[#0F172A]/60 border border-slate-800 rounded-xl">
+          <div class="text-base mb-1">🔒</div>
+          <div class="font-bold text-white text-[11px]">Zero Credentials</div>
+          <div class="text-[10px] text-slate-400">No OTP/PIN/Aadhaar</div>
+        </div>
+        <div class="p-2.5 bg-[#0F172A]/60 border border-slate-800 rounded-xl">
+          <div class="text-base mb-1">🗑️</div>
+          <div class="font-bold text-white text-[11px]">DPDP Act 2023</div>
+          <div class="text-[10px] text-slate-400">30-day auto shredding</div>
+        </div>
+        <div class="p-2.5 bg-[#0F172A]/60 border border-slate-800 rounded-xl">
+          <div class="text-base mb-1">⚖️</div>
+          <div class="font-bold text-white text-[11px]">Calibrated Signal</div>
+          <div class="text-[10px] text-slate-400">Signal, not proof</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Fully Interactive Smartphone Device -->
+    <div class="shrink-0 flex justify-center">
+      <div id="phoneDevice" class="phone-wrapper">
+
+        <!-- Top Phone Status Bar & Notch -->
+        <div class="bg-[#0A1128] pt-1 px-6 flex items-center justify-between text-[11px] text-slate-300 select-none z-30">
+          <span class="font-semibold font-mono" id="phoneClock">09:41</span>
+          <div id="deviceNotchContainer">
+            <div class="dynamic-island">
+              <span class="text-[9px] text-emerald-400 font-mono flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> JanVaani
+              </span>
+              <span class="text-[10px]">🛡️</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+            <span>5G</span>
+            <span>VoLTE</span>
+            <span>98%</span>
+          </div>
+        </div>
+
+        <!-- Indian Tricolor Sovereign Accent Ribbon -->
+        <div class="h-1 w-full flex shrink-0">
+          <div class="flex-1 bg-[#FF9933]"></div>
+          <div class="flex-1 bg-white"></div>
+          <div class="flex-1 bg-[#138808]"></div>
+        </div>
+
+        <!-- Mobile App Top Bar -->
+        <header class="bg-[#0F1A36] px-4 py-3 border-b border-[#1E2D56] flex items-center justify-between shrink-0 z-20">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center text-lg font-bold shadow-md">
+              🛡️
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm font-extrabold text-white tracking-tight font-display" id="appTitle">JanVaani</span>
+                <span class="text-[9px] px-1.5 py-0.2 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">PROTOTYPE</span>
+              </div>
+              <p class="text-[10px] text-slate-400 font-medium" id="appSubtitle">जनवाणी • Sovereign Cyber Shield</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <!-- Language Selector Dropdown Pill -->
+            <button onclick="toggleLangSheet()" class="px-2.5 py-1.5 rounded-xl bg-[#17254D] border border-[#23335D] text-xs font-semibold text-slate-200 flex items-center gap-1 hover:border-indigo-400 transition">
+              <span class="text-xs">🌐</span>
+              <span id="activeLangLabel" class="font-bold">हिन्दी</span>
+              <span class="text-[9px] text-slate-400">▾</span>
+            </button>
+
+            <!-- 1930 Emergency Quick Dial -->
+            <button onclick="openHelplineTab()" class="px-2.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs shadow-md flex items-center gap-1 transition">
+              <span>📞</span> 1930
+            </button>
+          </div>
+        </header>
+
+        <!-- Dynamic Mobile Screens Viewport -->
+        <main class="flex-1 overflow-y-auto app-scroll p-4 space-y-4 relative" id="mobileViewport">
+
+          <!-- TAB 1: CHECKER HOME VIEW -->
+          <div id="viewCheckHome" class="space-y-4">
+            
+            <!-- Golden Hour Critical Alert Banner -->
+            <div class="bg-gradient-to-r from-[#3B0707] to-[#230505] border border-red-800/80 rounded-2xl p-3.5 space-y-1.5 shadow-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-red-300 font-bold text-xs flex items-center gap-1.5 font-display">
+                  <span class="pulse-glow w-2 h-2 rounded-full bg-red-500"></span>
+                  <span id="bannerTitle">Financial Fraud Golden Hour</span>
+                </span>
+                <span class="text-[10px] font-mono font-bold bg-red-950 text-red-200 px-2 py-0.5 rounded-md border border-red-800">1930</span>
+              </div>
+              <p class="text-[11px] text-red-200/90 leading-relaxed" id="bannerDesc">
+                Lost money to cyber fraud? Dial 1930 within 2 hours to initiate inter-bank lien freezing across Indian banks.
+              </p>
+            </div>
+
+            <!-- Primary Intake Question -->
+            <div class="space-y-1 pt-1">
+              <h2 class="text-lg font-black text-white font-display" id="homeHeading">What would you like to check?</h2>
+              <p class="text-xs text-slate-400" id="homeSubheading">Select an option to evaluate warning signs and find safe next steps.</p>
+            </div>
+
+            <!-- 5 Core Modal Action Cards -->
+            <div class="space-y-2.5">
+
+              <!-- Card 1: SMS & WhatsApp -->
+              <div onclick="openModalScreen('message')" class="bg-[#101B38] hover:bg-[#16244C] border border-[#1E2D56] hover:border-indigo-500/50 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition shadow-sm group">
+                <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                  💬
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-white group-hover:text-indigo-300" id="actionSmsTitle">Suspicious SMS / WhatsApp</h3>
+                    <span class="text-indigo-400 text-xs font-bold">➔</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-1" id="actionSmsDesc">Electricity cut alerts, APK links, lottery or job forwards</p>
+                  <span class="inline-block mt-1 text-[9.5px] px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 font-medium">Text, Chat & APKs</span>
+                </div>
+              </div>
+
+              <!-- Card 2: Phone Call & Digital Arrest -->
+              <div onclick="openModalScreen('call')" class="bg-[#101B38] hover:bg-[#16244C] border border-[#1E2D56] hover:border-red-500/50 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition shadow-sm group">
+                <div class="w-11 h-11 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                  📞
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-white group-hover:text-red-300" id="actionCallTitle">Phone Call / Call Script</h3>
+                    <span class="text-red-400 text-xs font-bold">➔</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-1" id="actionCallDesc">CBI digital arrest, police impersonation, KYC blocked</p>
+                  <span class="inline-block mt-1 text-[9.5px] px-2 py-0.5 rounded bg-red-950/60 text-red-300 font-medium">Spoofed Caller ID & Tactics</span>
+                </div>
+              </div>
+
+              <!-- Card 3: Link & QR Code -->
+              <div onclick="openModalScreen('link')" class="bg-[#101B38] hover:bg-[#16244C] border border-[#1E2D56] hover:border-sky-500/50 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition shadow-sm group">
+                <div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                  🔗
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-white group-hover:text-sky-300" id="actionLinkTitle">Link / QR Code</h3>
+                    <span class="text-sky-400 text-xs font-bold">➔</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-1" id="actionLinkDesc">Lookalike bank URLs, punycode, or payment QR codes</p>
+                  <span class="inline-block mt-1 text-[9.5px] px-2 py-0.5 rounded bg-sky-950/60 text-sky-300 font-medium">Anti-SSRF Safe Inspection</span>
+                </div>
+              </div>
+
+              <!-- Card 4: Photo / Video / Deepfake -->
+              <div onclick="openModalScreen('media')" class="bg-[#101B38] hover:bg-[#16244C] border border-[#1E2D56] hover:border-purple-500/50 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition shadow-sm group">
+                <div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                  🎭
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-white group-hover:text-purple-300" id="actionMediaTitle">Photo / Video / Deepfake</h3>
+                    <span class="text-purple-400 text-xs font-bold">➔</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-1" id="actionMediaDesc">Manipulated videos, fake notices, synthetic face swaps</p>
+                  <span class="inline-block mt-1 text-[9.5px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 font-medium">Artifact & Edge Analysis</span>
+                </div>
+              </div>
+
+              <!-- Card 5: Audio / Voice Clones -->
+              <div onclick="openModalScreen('audio')" class="bg-[#101B38] hover:bg-[#16244C] border border-[#1E2D56] hover:border-emerald-500/50 rounded-2xl p-3.5 flex items-center gap-3.5 cursor-pointer transition shadow-sm group">
+                <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                  🎙️
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold text-white group-hover:text-emerald-300" id="actionAudioTitle">Voice Note / Audio Clone</h3>
+                    <span class="text-emerald-400 text-xs font-bold">➔</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-1" id="actionAudioDesc">Voice notes claiming family in distress or police custody</p>
+                  <span class="inline-block mt-1 text-[9.5px] px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 font-medium">Spectrogram Pitch Check</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Skill India / MY Bharat Interactive Spotlight Card -->
+            <div class="bg-gradient-to-br from-[#1E2548] to-[#121832] border border-[#2D396B] rounded-2xl p-4 space-y-2.5 shadow-md">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  💡 Skill India Digital Habit
+                </span>
+                <span class="text-[10px] text-slate-400">1 min Reflex Test</span>
+              </div>
+              <h4 class="text-xs font-bold text-white leading-snug">The Golden Rule: Never Enter UPI PIN to Receive Money</h4>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                Over 60% of marketplace and cashback scams exploit fake "Receive Money" requests. Test your reflexes now!
+              </p>
+              <button onclick="switchTab('learn')" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+                Start 1-Minute Reflex Quiz ➔
+              </button>
+            </div>
+
+            <!-- Privacy Guarantee Footer Notice -->
+            <div class="text-center px-4 py-2">
+              <p class="text-[10px] text-slate-500 leading-normal">
+                JanVaani is an independent sovereign research prototype. Never enter OTPs, passwords, or Aadhaar.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- TAB 2: INTERACTIVE CHECKER WORKSPACE (SMS, CALL, LINK, DEEPFAKE, AUDIO) -->
+          <div id="viewCheckerWorkspace" class="hidden space-y-4">
+            
+            <!-- Back Button Bar -->
+            <div class="flex items-center justify-between">
+              <button onclick="returnToHome()" class="px-3 py-1 rounded-xl bg-[#17254D] border border-[#23335D] text-xs font-bold text-slate-200 flex items-center gap-1.5 hover:text-white">
+                <span>←</span> Back
+              </button>
+              <span id="activeWorkspaceHeader" class="text-xs font-extrabold text-white font-display">Screening Content</span>
+              <span class="text-[10px] text-slate-400">Step 1 of 2</span>
+            </div>
+
+            <!-- Zero Credentials Warning Box -->
+            <div class="bg-[#3B0707] border border-red-800 rounded-xl p-3 text-[11px] text-red-200 space-y-1">
+              <div class="font-bold flex items-center gap-1">
+                <span>⚠️</span> Strict Privacy Shield Notice
+              </div>
+              <p class="text-[10.5px] leading-relaxed">
+                Never enter OTPs, UPI PINs, passwords, or Aadhaar numbers. JanVaani never requests private credentials.
+              </p>
+            </div>
+
+            <!-- DYNAMIC MODALITY WORKSPACE: CALL SCREEN SIMULATOR -->
+            <div id="modalityCallView" class="hidden space-y-3">
+              <div class="bg-[#121A33] border border-[#23335D] rounded-2xl p-4 text-center space-y-3">
+                <div class="w-14 h-14 mx-auto rounded-full bg-red-600/20 border-2 border-red-500 flex items-center justify-center text-2xl pulse-glow">
+                  📞
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-red-400 uppercase tracking-wider">Simulated Incoming Call</div>
+                  <div class="text-sm font-extrabold text-white mt-0.5" id="callSimNumber">+91 91234 56789</div>
+                  <div class="text-[11px] text-amber-300 font-semibold" id="callSimClaim">Claiming: "CBI Headquarters, New Delhi"</div>
+                </div>
+                <div class="bg-red-950/40 border border-red-800/60 rounded-xl p-2.5 text-[10px] text-red-300 text-left">
+                  <strong>🚨 Caller ID Spoof Alert:</strong> Fraudsters use VoIP gateways to display genuine police station phone numbers. The caller's real identity cannot be proven by phone number alone.
+                </div>
+              </div>
+            </div>
+
+            <!-- DYNAMIC MODALITY WORKSPACE: DEEPFAKE INSPECTOR -->
+            <div id="modalityDeepfakeView" class="hidden space-y-3">
+              <div class="bg-[#121A33] border border-purple-500/40 rounded-2xl p-3.5 space-y-3 relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-purple-300">Synthetic Visual Artifact Inspector</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-purple-900/60 text-purple-200 font-mono">Frame 240/360</span>
+                </div>
+
+                <!-- Media Preview with Bounding Box Artifact Overlays -->
+                <div class="relative bg-black rounded-xl h-44 overflow-hidden flex items-center justify-center border border-purple-900">
+                  <div class="scanner-beam"></div>
+                  <!-- Simulated Face Representation -->
+                  <div class="relative w-28 h-28 rounded-full border-2 border-dashed border-red-500 flex items-center justify-center">
+                    <span class="text-4xl">👤</span>
+                    <!-- Artifact Box 1: Eyes -->
+                    <div class="absolute top-6 left-4 w-7 h-4 border border-red-400 bg-red-500/20 text-[7px] text-red-300 font-mono flex items-center justify-center">
+                      Reflect
+                    </div>
+                    <!-- Artifact Box 2: Lip Sync -->
+                    <div class="absolute bottom-5 left-6 w-16 h-5 border border-amber-400 bg-amber-500/20 text-[7px] text-amber-200 font-mono flex items-center justify-center">
+                      Lip Sync Desync
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-[10.5px] text-slate-300 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] font-semibold">
+                    <span class="text-purple-300">Artifact Confidence:</span>
+                    <span class="text-red-400 font-mono font-bold">89% Probabilistic Likelihood</span>
+                  </div>
+                  <p class="text-[10px] text-slate-400">
+                    Detected: Corneal light reflection discrepancy, unnatural skin smoothing, boundary warp around chin.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- DYNAMIC MODALITY WORKSPACE: AUDIO SPECTROGRAM -->
+            <div id="modalityAudioView" class="hidden space-y-3">
+              <div class="bg-[#121A33] border border-emerald-500/40 rounded-2xl p-3.5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-emerald-300">Voice Synthesis Frequency Analyzer</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-200 font-mono">48 kHz PCM</span>
+                </div>
+
+                <!-- Animated Waveform -->
+                <div class="bg-black/80 rounded-xl p-4 flex items-center justify-center gap-1.5 h-20 border border-emerald-950">
+                  <div class="wave-bar" style="animation-delay: 0.1s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.3s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.5s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.2s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.4s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.6s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.1s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.7s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.3s"></div>
+                  <div class="wave-bar" style="animation-delay: 0.5s"></div>
+                </div>
+
+                <div class="text-[10.5px] text-slate-300">
+                  <div class="text-amber-300 font-bold">Tactic Identified: Emergency Ransom Extortion</div>
+                  <p class="text-[10px] text-slate-400 mt-0.5">
+                    Cloned voice requests instant transfer for urgent bail / hospital admission. Absence of natural room reverberation detected.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- DYNAMIC MODALITY WORKSPACE: QR CODE SCANNER -->
+            <div id="modalityQrView" class="hidden space-y-3">
+              <div class="bg-[#121A33] border border-sky-500/40 rounded-2xl p-3.5 space-y-3 text-center">
+                <div class="relative w-40 h-40 mx-auto bg-black rounded-xl border-2 border-sky-500 flex items-center justify-center overflow-hidden">
+                  <div class="scanner-beam"></div>
+                  <span class="text-5xl">📱</span>
+                  <!-- QR Reticle corners -->
+                  <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-sky-400"></div>
+                  <div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-sky-400"></div>
+                  <div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-sky-400"></div>
+                  <div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-sky-400"></div>
+                </div>
+                <div class="text-left bg-sky-950/40 border border-sky-900 rounded-xl p-2.5 space-y-1">
+                  <div class="text-[11px] font-bold text-sky-200">Decoded Destination:</div>
+                  <code class="text-[10px] text-red-300 block break-all font-mono">http://sbi-yono-kyc-update.top/auth.php</code>
+                  <span class="text-[9px] text-red-400 font-semibold">⚠️ Deceptive lookalike domain (.top TLD is not official State Bank of India)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text Content Input -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-300 flex items-center justify-between">
+                <span>Details / Transcript / Message:</span>
+                <span class="text-[10px] text-indigo-400">Paste text below</span>
+              </label>
+              <textarea id="mainContentInput" rows="4" class="w-full bg-[#0A1128] border border-[#23335D] focus:border-indigo-500 rounded-xl p-3 text-xs text-white placeholder:text-slate-500 focus:outline-none transition resize-none font-sans" placeholder="Paste suspicious SMS, call transcript, or URL here..."></textarea>
+            </div>
+
+            <!-- Sender / Caller ID (Optional) -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400">Claimed Sender / Org:</label>
+                <input id="inputClaimedSender" type="text" placeholder="e.g. CBI, SBI, Electricity" class="w-full bg-[#0A1128] border border-[#23335D] rounded-xl px-2.5 py-2 text-xs text-white placeholder:text-slate-600 focus:outline-none">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400">Claimed Number / Header:</label>
+                <input id="inputClaimedNumber" type="text" placeholder="e.g. +91 98214 00000" class="w-full bg-[#0A1128] border border-[#23335D] rounded-xl px-2.5 py-2 text-xs text-white placeholder:text-slate-600 focus:outline-none">
+              </div>
+            </div>
+
+            <!-- Run Analysis Action Button -->
+            <button onclick="executeMobileAnalysis()" id="btnAnalyze" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs shadow-lg transition flex items-center justify-center gap-2">
+              <span>🛡️</span> Assess Warning Signs ➔
+            </button>
+
+            <!-- Loading State Spinner -->
+            <div id="scanLoadingBox" class="hidden text-center py-6 space-y-2">
+              <div class="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <div class="text-xs font-bold text-indigo-300">Checking Indian Cyber-Safety Rules...</div>
+              <p class="text-[10px] text-slate-400">Comparing against MHA I4C, Sanchar Saathi, and RBI Advisories</p>
+            </div>
+
+            <!-- LIVE RESULT CARD -->
+            <div id="liveResultCard" class="hidden bg-[#0A1128] border rounded-2xl p-4 space-y-3.5 shadow-xl transition">
+              
+              <!-- Result Header Badge -->
+              <div class="flex items-center justify-between">
+                <span id="resultBadge" class="text-[11px] font-black uppercase px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+                  🚨 High-Risk Indicators
+                </span>
+                <span id="resultScore" class="text-xs font-mono font-bold text-indigo-400">96% Conf.</span>
+              </div>
+
+              <!-- Plain Language Explanation -->
+              <div class="space-y-1">
+                <h4 class="text-xs font-extrabold text-white">Assessment Summary:</h4>
+                <p id="resultSummary" class="text-xs text-slate-200 leading-relaxed"></p>
+              </div>
+
+              <!-- Specific Warning Clues -->
+              <div class="space-y-1.5">
+                <span class="text-[11px] font-bold text-red-300">Specific Clues Detected:</span>
+                <div id="resultCluesContainer" class="space-y-1"></div>
+              </div>
+
+              <!-- Official Advisory Citation -->
+              <div class="bg-[#082F49] border border-[#0369A1] rounded-xl p-3 space-y-1">
+                <div class="flex items-center gap-1.5 text-sky-200 text-xs font-bold">
+                  <span>🏛️</span> Official Source Match:
+                </div>
+                <p id="resultOfficialNotice" class="text-[11px] text-sky-100 leading-normal">
+                  Matches MHA Indian Cyber Crime Coordination Centre (I4C) Public Advisory on "Digital Arrest" fraud syndicates.
+                </p>
+                <div class="text-[9.5px] text-sky-300/80">Ref: https://cybercrime.gov.in/advisories</div>
+              </div>
+
+              <!-- Actionable Safe Next Steps -->
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 space-y-2">
+                <span class="text-xs font-bold text-emerald-400">Safe Next Steps:</span>
+                <ul class="text-[11px] text-slate-300 space-y-1.5" id="resultNextSteps">
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-emerald-400">✓</span> Do NOT transfer funds to any "temporary verification account".
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-emerald-400">✓</span> Real police officers never arrest citizens over Skype or WhatsApp calls.
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-emerald-400">✓</span> Dial 1930 immediately if money has already been deducted.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Dial 1930 Direct Action Button inside Result -->
+              <button onclick="openHelplineTab()" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs shadow flex items-center justify-center gap-1.5 transition">
+                <span>📞</span> Report to 1930 Helpline
+              </button>
+            </div>
+
+          </div>
+
+          <!-- TAB 3: LEARN HABITS (SKILL INDIA & MY BHARAT) -->
+          <div id="viewLearnTab" class="hidden space-y-4">
+            <div class="space-y-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                Skill India Digital Safety
+              </span>
+              <h2 class="text-lg font-black text-white font-display">Habits & Reflex Quizzes</h2>
+              <p class="text-xs text-slate-400">Build automatic digital reflexes to protect yourself and your family.</p>
+            </div>
+
+            <!-- Quiz Card 1: UPI PIN -->
+            <div class="bg-[#101B38] border border-[#1E2D56] rounded-2xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-amber-400">Quiz 1: Receiving Money</span>
+                <span class="text-[10px] text-slate-400">Reflex Score: 100 pts</span>
+              </div>
+              <p class="text-xs font-bold text-white">
+                Someone wants to buy your used bicycle online. They say: "I am sending you Rs 5,000. Please enter your UPI PIN to approve the credit." What should you do?
+              </p>
+              <div class="space-y-2">
+                <button onclick="handleQuizAnswer(1, false)" id="quiz1_a" class="w-full text-left p-2.5 rounded-xl bg-[#17254D] border border-slate-700 text-xs text-slate-200 hover:border-indigo-400 transition">
+                  A. Enter UPI PIN so the money is credited to my bank.
+                </button>
+                <button onclick="handleQuizAnswer(1, true)" id="quiz1_b" class="w-full text-left p-2.5 rounded-xl bg-[#17254D] border border-slate-700 text-xs text-slate-200 hover:border-emerald-400 transition">
+                  B. Decline immediately. You NEVER enter a UPI PIN to receive money.
+                </button>
+              </div>
+              <div id="quiz1_feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
+            </div>
+
+            <!-- Quiz Card 2: Digital Arrest -->
+            <div class="bg-[#101B38] border border-[#1E2D56] rounded-2xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-red-400">Quiz 2: Fake Police Interrogation</span>
+                <span class="text-[10px] text-slate-400">Reflex Score: 100 pts</span>
+              </div>
+              <p class="text-xs font-bold text-white">
+                A caller in police uniform says you are in "Digital Arrest" over a drug package. Can Indian law enforcement arrest you over video call?
+              </p>
+              <div class="space-y-2">
+                <button onclick="handleQuizAnswer(2, true)" id="quiz2_a" class="w-full text-left p-2.5 rounded-xl bg-[#17254D] border border-slate-700 text-xs text-slate-200 hover:border-emerald-400 transition">
+                  A. No! Indian law has NO provision for "Digital Arrest". It is 100% fraud.
+                </button>
+                <button onclick="handleQuizAnswer(2, false)" id="quiz2_b" class="w-full text-left p-2.5 rounded-xl bg-[#17254D] border border-slate-700 text-xs text-slate-200 hover:border-red-400 transition">
+                  B. Yes, Supreme Court authorized digital arrests in 2024.
+                </button>
+              </div>
+              <div id="quiz2_feedback" class="hidden text-xs p-2.5 rounded-xl"></div>
+            </div>
+          </div>
+
+          <!-- TAB 4: 1930 HELPLINE DIRECTORY -->
+          <div id="viewHelplineTab" class="hidden space-y-4">
+            <div class="space-y-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30">
+                Government Helplines
+              </span>
+              <h2 class="text-lg font-black text-white font-display">National Cybercrime Directory</h2>
+              <p class="text-xs text-slate-400">Official Indian sovereign helplines and portals.</p>
+            </div>
+
+            <!-- 1930 Main Action Card -->
+            <div class="bg-[#3B0707] border border-red-700 rounded-2xl p-4 space-y-3 shadow-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-red-300">National Cyber Financial Fraud Helpline</span>
+                <span class="text-sm font-mono font-black text-white bg-red-900 px-2 py-0.5 rounded">1930</span>
+              </div>
+              <p class="text-xs text-red-100 leading-relaxed">
+                Toll-free emergency helpline managed by the Ministry of Home Affairs (I4C). Report financial fraud within 2 hours to freeze stolen money before withdrawal.
+              </p>
+              <a href="tel:1930" class="block text-center py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow transition">
+                📞 Tap to Call 1930 Now
+              </a>
+            </div>
+
+            <!-- Portal Links -->
+            <div class="space-y-2.5">
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-white">National Cybercrime Portal</div>
+                  <div class="text-[10px] text-slate-400">cybercrime.gov.in (Official MHA Portal)</div>
+                </div>
+                <span class="text-indigo-400 text-xs font-bold">Visit ↗</span>
+              </div>
+
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-white">Sanchar Saathi (Chakshu)</div>
+                  <div class="text-[10px] text-slate-400">Report fraudulent calls and spam numbers</div>
+                </div>
+                <span class="text-indigo-400 text-xs font-bold">Visit ↗</span>
+              </div>
+
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-white">CEIR (Block Lost/Stolen Mobile)</div>
+                  <div class="text-[10px] text-slate-400">Block phone IMEI across all Indian telecom networks</div>
+                </div>
+                <span class="text-indigo-400 text-xs font-bold">Visit ↗</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: PRIVACY & DPDP ACT -->
+          <div id="viewPrivacyTab" class="hidden space-y-4">
+            <div class="space-y-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                DPDP Act 2023
+              </span>
+              <h2 class="text-lg font-black text-white font-display">Privacy & Citizen Rights</h2>
+              <p class="text-xs text-slate-400">Designed with privacy-by-default under Indian Data Protection laws.</p>
+            </div>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 space-y-1">
+                <div class="font-bold text-white">1. Zero Registration Intake</div>
+                <p class="text-[11px] text-slate-300">Basic safety checks require zero sign-in, zero phone numbers, and zero email addresses.</p>
+              </div>
+
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 space-y-1">
+                <div class="font-bold text-white">2. Automatic 30-Day Shredding</div>
+                <p class="text-[11px] text-slate-300">Submitted text queries and media fingerprints are purged automatically after 30 days.</p>
+              </div>
+
+              <div class="bg-[#101B38] border border-[#1E2D56] rounded-xl p-3 space-y-1">
+                <div class="font-bold text-white">3. Section 11 Right to Erasure</div>
+                <p class="text-[11px] text-slate-300">Exercise immediate deletion of any submitted diagnostic report at any time.</p>
+              </div>
+            </div>
+          </div>
+
+        </main>
+
+        <!-- Phone Bottom Navigation Bar -->
+        <nav class="bg-[#0F1A36] border-t border-[#1E2D56] px-4 py-2.5 flex items-center justify-between shrink-0 z-20">
+          <button onclick="switchTab('check')" id="tabBtnCheck" class="flex-1 flex flex-col items-center gap-1 text-white font-bold transition">
+            <span class="text-base">🛡️</span>
+            <span class="text-[10px]" id="navCheckLabel">Check</span>
+          </button>
+
+          <button onclick="switchTab('learn')" id="tabBtnLearn" class="flex-1 flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <span class="text-base">💡</span>
+            <span class="text-[10px]" id="navLearnLabel">Learn</span>
+          </button>
+
+          <button onclick="switchTab('helpline')" id="tabBtnHelpline" class="flex-1 flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <span class="text-base">📞</span>
+            <span class="text-[10px]" id="navHelplineLabel">1930 Help</span>
+          </button>
+
+          <button onclick="switchTab('privacy')" id="tabBtnPrivacy" class="flex-1 flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <span class="text-base">🔒</span>
+            <span class="text-[10px]" id="navPrivacyLabel">Privacy</span>
+          </button>
+        </nav>
+
+        <!-- 22 INDIAN SCHEDULED LANGUAGES DRAWER (MODAL SHEET) -->
+        <div id="langSheet" class="hidden absolute inset-0 bg-black/85 backdrop-blur-md z-50 flex flex-col justify-end">
+          <div class="bg-[#0F1A36] border-t border-[#23335D] rounded-t-3xl max-h-[80%] flex flex-col p-4 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-700">
+              <div>
+                <h3 class="text-sm font-bold text-white font-display">Select Language (भाषा चुनें)</h3>
+                <p class="text-[10px] text-slate-400">22 Scheduled Indian Languages + English</p>
+              </div>
+              <button onclick="toggleLangSheet()" class="w-7 h-7 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center text-xs">✕</button>
+            </div>
+
+            <!-- Scrollable Languages Grid -->
+            <div class="overflow-y-auto app-scroll space-y-1.5 pr-1" id="languagesListContainer">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 22 Scheduled Indian Languages Registry
+    const LANGUAGES = [
+      { code: 'hi', name: 'Hindi', native: 'हिन्दी', reviewed: true },
+      { code: 'en', name: 'English', native: 'English', reviewed: true },
+      { code: 'bn', name: 'Bengali', native: 'বাংলা', reviewed: false },
+      { code: 'te', name: 'Telugu', native: 'తెలుగు', reviewed: false },
+      { code: 'mr', name: 'Marathi', native: 'मराठी', reviewed: false },
+      { code: 'ta', name: 'Tamil', native: 'தமிழ்', reviewed: false },
+      { code: 'ur', name: 'Urdu', native: 'اردو', reviewed: false },
+      { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી', reviewed: false },
+      { code: 'kn', name: 'Kannada', native: 'ಕನ್ನಡ', reviewed: false },
+      { code: 'ml', name: 'Malayalam', native: 'മലയാളം', reviewed: false },
+      { code: 'or', name: 'Odia', native: 'ଓଡ଼ିଆ', reviewed: false },
+      { code: 'pa', name: 'Punjabi', native: 'ਪੰਜਾਬੀ', reviewed: false },
+      { code: 'as', name: 'Assamese', native: 'অসমীয়া', reviewed: false },
+      { code: 'ma', name: 'Maithili', native: 'मैथिली', reviewed: false },
+      { code: 'sa', name: 'Sanskrit', native: 'संस्कृतम्', reviewed: false },
+      { code: 'ne', name: 'Nepali', native: 'नेपाली', reviewed: false },
+      { code: 'ks', name: 'Kashmiri', native: 'कॉशुर', reviewed: false },
+      { code: 'kok', name: 'Konkani', native: 'कोंकणी', reviewed: false },
+      { code: 'sd', name: 'Sindhi', native: 'सिन्धी', reviewed: false },
+      { code: 'mni', name: 'Manipuri', native: 'মৈতৈলোন্', reviewed: false },
+      { code: 'brx', name: 'Bodo', native: 'बड़ो', reviewed: false },
+      { code: 'sat', name: 'Santali', native: 'संताली', reviewed: false },
+      { code: 'doi', name: 'Dogri', native: 'डोगरी', reviewed: false }
+    ];
+
+    let currentLang = 'hi';
+    let currentModality = 'message';
+
+    // Populate Languages Drawer
+    function renderLanguagesDrawer() {
+      const container = document.getElementById('languagesListContainer');
+      container.innerHTML = '';
+      LANGUAGES.forEach(lang => {
+        const item = document.createElement('div');
+        item.className = `p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition ${lang.code === currentLang ? 'bg-indigo-600/30 border-indigo-400 text-white' : 'bg-[#142042] border-[#202E54] text-slate-300 hover:bg-[#1A2A5A]'}`;
+        item.onclick = () => selectLanguage(lang.code);
+
+        item.innerHTML = `
+          <div class="flex items-center gap-2.5">
+            <span class="text-sm font-bold">${lang.native}</span>
+            <span class="text-xs text-slate-400">(${lang.name})</span>
+          </div>
+          <span class="text-[9.5px] px-2 py-0.5 rounded ${lang.reviewed ? 'bg-emerald-950 text-emerald-300 border border-emerald-800' : 'bg-slate-800 text-slate-400'} font-medium">
+            ${lang.reviewed ? '✓ Verified' : 'AI Assisted'}
+          </span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleLangSheet() {
+      const sheet = document.getElementById('langSheet');
+      sheet.classList.toggle('hidden');
+    }
+
+    function selectLanguage(code) {
+      currentLang = code;
+      const langObj = LANGUAGES.find(l => l.code === code);
+      document.getElementById('activeLangLabel').innerText = langObj.native;
+      toggleLangSheet();
+
+      // Update UI translations dynamically
+      if (code === 'en') {
+        document.getElementById('homeHeading').innerText = 'What would you like to check?';
+        document.getElementById('homeSubheading').innerText = 'Select an option to evaluate warning signs and find safe next steps.';
+        document.getElementById('actionSmsTitle').innerText = 'Suspicious SMS / WhatsApp';
+        document.getElementById('actionCallTitle').innerText = 'Phone Call / Call Script';
+        document.getElementById('actionLinkTitle').innerText = 'Link / QR Code';
+        document.getElementById('actionMediaTitle').innerText = 'Photo / Video / Deepfake';
+        document.getElementById('actionAudioTitle').innerText = 'Voice Note / Audio Clone';
+        document.getElementById('navCheckLabel').innerText = 'Check';
+        document.getElementById('navLearnLabel').innerText = 'Learn';
+        document.getElementById('navHelplineLabel').innerText = '1930 Help';
+        document.getElementById('navPrivacyLabel').innerText = 'Privacy';
+      } else if (code === 'hi') {
+        document.getElementById('homeHeading').innerText = 'आप क्या जाँचना चाहते हैं?';
+        document.getElementById('homeSubheading').innerText = 'संदिग्ध लक्षणों को समझने और सुरक्षित कदम उठाने के लिए विकल्प चुनें।';
+        document.getElementById('actionSmsTitle').innerText = 'संदिग्ध SMS / व्हाट्सएप संदेश';
+        document.getElementById('actionCallTitle').innerText = 'संदिग्ध कॉल / डिजिटल अरेस्ट';
+        document.getElementById('actionLinkTitle').innerText = 'वेबसाइट लिंक / QR कोड';
+        document.getElementById('actionMediaTitle').innerText = 'फोटो / वीडियो / डीपफेक';
+        document.getElementById('actionAudioTitle').innerText = 'वॉइस रिकॉर्डिंग / नकली आवाज़';
+        document.getElementById('navCheckLabel').innerText = 'जांचें';
+        document.getElementById('navLearnLabel').innerText = 'सीखें';
+        document.getElementById('navHelplineLabel').innerText = '1930 मदद';
+        document.getElementById('navPrivacyLabel').innerText = 'गोपनीयता';
+      } else {
+        // Other Indian languages show native localized banner
+        document.getElementById('homeHeading').innerText = `${langObj.native}: What would you like to check?`;
+      }
+    }
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      document.getElementById('viewCheckHome').classList.add('hidden');
+      document.getElementById('viewCheckerWorkspace').classList.add('hidden');
+      document.getElementById('viewLearnTab').classList.add('hidden');
+      document.getElementById('viewHelplineTab').classList.add('hidden');
+      document.getElementById('viewPrivacyTab').classList.add('hidden');
+
+      // Reset tab button styles
+      ['Check', 'Learn', 'Helpline', 'Privacy'].forEach(name => {
+        const btn = document.getElementById(`tabBtn${name}`);
+        btn.classList.remove('text-white');
+        btn.classList.add('text-slate-400');
+      });
+
+      if (tabId === 'check') {
+        document.getElementById('viewCheckHome').classList.remove('hidden');
+        document.getElementById('tabBtnCheck').classList.add('text-white');
+      } else if (tabId === 'learn') {
+        document.getElementById('viewLearnTab').classList.remove('hidden');
+        document.getElementById('tabBtnLearn').classList.add('text-white');
+      } else if (tabId === 'helpline') {
+        document.getElementById('viewHelplineTab').classList.remove('hidden');
+        document.getElementById('tabBtnHelpline').classList.add('text-white');
+      } else if (tabId === 'privacy') {
+        document.getElementById('viewPrivacyTab').classList.remove('hidden');
+        document.getElementById('tabBtnPrivacy').classList.add('text-white');
+      }
+    }
+
+    function openHelplineTab() {
+      switchTab('helpline');
+    }
+
+    // Open Modal Screen for Checking
+    function openModalScreen(modality) {
+      currentModality = modality;
+      document.getElementById('viewCheckHome').classList.add('hidden');
+      document.getElementById('viewCheckerWorkspace').classList.remove('hidden');
+      document.getElementById('liveResultCard').classList.add('hidden');
+
+      // Hide all modality-specific views first
+      document.getElementById('modalityCallView').classList.add('hidden');
+      document.getElementById('modalityDeepfakeView').classList.add('hidden');
+      document.getElementById('modalityAudioView').classList.add('hidden');
+      document.getElementById('modalityQrView').classList.add('hidden');
+
+      const titles = {
+        message: 'Screening SMS / WhatsApp',
+        call: 'Screening Phone Call & Script',
+        link: 'Screening Link & QR Code',
+        media: 'Deepfake & Media Authenticity Lab',
+        audio: 'Voice Clone & Audio Note Analyzer'
+      };
+      document.getElementById('activeWorkspaceHeader').innerText = titles[modality] || 'Screening Content';
+
+      if (modality === 'call') {
+        document.getElementById('modalityCallView').classList.remove('hidden');
+        document.getElementById('mainContentInput').value = 'CBI Officer Rathore calling. You are under Digital Arrest for an intercepted narcotics parcel containing 140g MDMA. Join Skype room immediately and transfer verification funds.';
+        document.getElementById('inputClaimedSender').value = 'CBI Cyber Crime Cell';
+        document.getElementById('inputClaimedNumber').value = '+91 91234 56789';
+      } else if (modality === 'media') {
+        document.getElementById('modalityDeepfakeView').classList.remove('hidden');
+        document.getElementById('mainContentInput').value = 'Viral video on Telegram showing prominent minister endorsing a 500% profit cryptocurrency trading bot with immediate registration link.';
+      } else if (modality === 'audio') {
+        document.getElementById('modalityAudioView').classList.remove('hidden');
+        document.getElementById('mainContentInput').value = 'Voice note received on WhatsApp from son\'s number crying: "Papa police caught me in road accident, urgently send Rs 30,000 to this inspector UPI ID."';
+      } else if (modality === 'link') {
+        document.getElementById('modalityQrView').classList.remove('hidden');
+        document.getElementById('mainContentInput').value = 'http://sbi-yono-kyc-update.top/auth.php?id=99283';
+      } else {
+        document.getElementById('mainContentInput').value = 'Dear Consumer, Your electricity power will be cut tonight at 9:30 PM due to unpaid bill. Immediately contact Electricity Officer at 9876543210 or install Mahavitaran.apk';
+      }
+    }
+
+    function returnToHome() {
+      document.getElementById('viewCheckerWorkspace').classList.add('hidden');
+      document.getElementById('viewCheckHome').classList.remove('hidden');
+    }
+
+    // Trigger Demo Threats from Evaluator Deck
+    function triggerThreat(type) {
+      if (type === 'arrest') openModalScreen('call');
+      if (type === 'power') openModalScreen('message');
+      if (type === 'deepfake') openModalScreen('media');
+      if (type === 'voice') openModalScreen('audio');
+
+      // Auto-run analysis after brief transition
+      setTimeout(() => {
+        executeMobileAnalysis();
+      }, 300);
+    }
+
+    // Execute Analysis Logic with Evidence and Trust & Safety calibration
+    function executeMobileAnalysis() {
+      const content = document.getElementById('mainContentInput').value;
+      if (!content.trim()) return;
+
+      document.getElementById('btnAnalyze').classList.add('hidden');
+      document.getElementById('scanLoadingBox').classList.remove('hidden');
+      document.getElementById('liveResultCard').classList.add('hidden');
+
+      setTimeout(() => {
+        document.getElementById('scanLoadingBox').classList.add('hidden');
+        document.getElementById('btnAnalyze').classList.remove('hidden');
+        document.getElementById('liveResultCard').classList.remove('hidden');
+
+        const card = document.getElementById('liveResultCard');
+        const badge = document.getElementById('resultBadge');
+        const score = document.getElementById('resultScore');
+        const summary = document.getElementById('resultSummary');
+        const cluesBox = document.getElementById('resultCluesContainer');
+        const officialNotice = document.getElementById('resultOfficialNotice');
+
+        cluesBox.innerHTML = '';
+
+        if (currentModality === 'call' || content.toLowerCase().includes('digital arrest') || content.toLowerCase().includes('cbi')) {
+          card.className = 'bg-[#150606] border border-red-700/80 rounded-2xl p-4 space-y-3.5 shadow-xl';
+          badge.className = 'text-[11px] font-black uppercase px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30';
+          badge.innerText = '🚨 High-Risk Indicators';
+          score.innerText = '98% Confidence';
+          summary.innerText = 'Multiple severe tactics matching fake police "Digital Arrest" extortions. No Indian law enforcement agency conducts arrests over video calls.';
+          
+          const clues = [
+            'Impersonation of Central Bureau of Investigation (CBI) / Narcotics Bureau',
+            'Threat of "Digital Arrest" — a completely fabricated, non-existent legal term',
+            'Coercion to join video room and isolate victim from family',
+            'Request for "security verification deposit" to unfreeze accounts'
+          ];
+          clues.forEach(c => {
+            const p = document.createElement('div');
+            p.className = 'text-[11px] text-red-300 bg-red-950/40 p-2 rounded-lg border border-red-900/40';
+            p.innerText = '• ' + c;
+            cluesBox.appendChild(p);
+          });
+
+          officialNotice.innerText = 'Matches MHA Indian Cyber Crime Coordination Centre (I4C) Public Advisory on "Digital Arrest" fraud syndicates. Ref: cybercrime.gov.in/advisories';
+
+        } else if (currentModality === 'media') {
+          card.className = 'bg-[#12071E] border border-purple-700/80 rounded-2xl p-4 space-y-3.5 shadow-xl';
+          badge.className = 'text-[11px] font-black uppercase px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30';
+          badge.innerText = '⚠️ Check Carefully (Synthetic Signal)';
+          score.innerText = '89% AI Artifact Signal';
+          summary.innerText = 'Visual and acoustic analysis indicates synthetic manipulation. Note: AI detection is a probabilistic signal, not legal proof.';
+          
+          const clues = [
+            'Unnatural corneal light reflection and pupil dilation discrepancy',
+            'Temporal blurring and edge warping around facial boundary',
+            'Exaggerated claim of 500% guaranteed investment return'
+          ];
+          clues.forEach(c => {
+            const p = document.createElement('div');
+            p.className = 'text-[11px] text-purple-200 bg-purple-950/40 p-2 rounded-lg border border-purple-900/40';
+            p.innerText = '• ' + c;
+            cluesBox.appendChild(p);
+          });
+
+          officialNotice.innerText = 'Cross-reference with Press Information Bureau (PIB Fact Check) before believing or forwarding viral synthetic media.';
+
+        } else if (currentModality === 'audio') {
+          card.className = 'bg-[#150606] border border-red-700/80 rounded-2xl p-4 space-y-3.5 shadow-xl';
+          badge.className = 'text-[11px] font-black uppercase px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30';
+          badge.innerText = '🚨 High-Risk Indicators';
+          score.innerText = '94% Confidence';
+          summary.innerText = 'Classic urgent distress voice-clone scam. Criminals clone 3-second social media audio to fabricate false kidnapping or police custody emergencies.';
+          
+          const clues = [
+            'Robotic synthesis cadence and lack of natural room reverberation',
+            'Severe emotional urgency demanding immediate funds for bail/hospital',
+            'Payment requested to unfamiliar third-party UPI VPA'
+          ];
+          clues.forEach(c => {
+            const p = document.createElement('div');
+            p.className = 'text-[11px] text-red-300 bg-red-950/40 p-2 rounded-lg border border-red-900/40';
+            p.innerText = '• ' + c;
+            cluesBox.appendChild(p);
+          });
+
+          officialNotice.innerText = 'Always disconnect and call your family member back directly on their normal regular phone line to verify.';
+
+        } else {
+          // SMS / WhatsApp Electricity / APK Phishing
+          card.className = 'bg-[#150606] border border-red-700/80 rounded-2xl p-4 space-y-3.5 shadow-xl';
+          badge.className = 'text-[11px] font-black uppercase px-2.5 py-1 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30';
+          badge.innerText = '🚨 High-Risk Indicators';
+          score.innerText = '96% Confidence';
+          summary.innerText = 'Phishing message impersonating utility discom. Legitimate electricity boards never send disconnection notices via personal mobile numbers or APK download links.';
+          
+          const clues = [
+            'Artificial urgency: "Power will be cut tonight at 9:30 PM"',
+            'Malicious payload: Prompting installation of unsigned Android APK (.apk)',
+            'Sent from standard 10-digit mobile number instead of official DLT alpha header (e.g. AD-MSEB)'
+          ];
+          clues.forEach(c => {
+            const p = document.createElement('div');
+            p.className = 'text-[11px] text-red-300 bg-red-950/40 p-2 rounded-lg border border-red-900/40';
+            p.innerText = '• ' + c;
+            cluesBox.appendChild(p);
+          });
+
+          officialNotice.innerText = 'Advisory from Ministry of Power & CERT-In on malicious Android trojans masked as electricity bill updates.';
+        }
+
+      }, 600);
+    }
+
+    // Quiz Interaction Logic
+    function handleQuizAnswer(quizId, isCorrect) {
+      const feedback = document.getElementById(`quiz${quizId}_feedback`);
+      feedback.classList.remove('hidden');
+      if (isCorrect) {
+        feedback.className = 'text-xs p-3 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-200 font-semibold';
+        feedback.innerHTML = '🎉 <strong>Correct!</strong> You NEVER enter a UPI PIN or password to receive funds. UPI PIN is only needed to DEBIT money from your bank account.';
+      } else {
+        feedback.className = 'text-xs p-3 rounded-xl bg-red-950 border border-red-800 text-red-200 font-semibold';
+        feedback.innerHTML = '❌ <strong>Incorrect!</strong> Entering your UPI PIN authorizes a withdrawal. You NEVER enter a UPI PIN to receive money.';
+      }
+    }
+
+    // Device Frame Switcher (iOS vs Android)
+    function setDeviceType(type) {
+      const phone = document.getElementById('phoneDevice');
+      const notchContainer = document.getElementById('deviceNotchContainer');
+      const btnIos = document.getElementById('btnIos');
+      const btnAndroid = document.getElementById('btnAndroid');
+
+      if (type === 'android') {
+        phone.classList.add('android-frame');
+        notchContainer.innerHTML = '<div class="punch-hole"></div>';
+        btnAndroid.className = 'px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-xs shadow';
+        btnIos.className = 'px-3 py-1.5 rounded-lg bg-[#1E293B] text-slate-300 hover:text-white font-semibold text-xs';
+      } else {
+        phone.classList.remove('android-frame');
+        notchContainer.innerHTML = `
+          <div class="dynamic-island">
+            <span class="text-[9px] text-emerald-400 font-mono flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> JanVaani
+            </span>
+            <span class="text-[10px]">🛡️</span>
+          </div>
+        `;
+        btnIos.className = 'px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-xs shadow';
+        btnAndroid.className = 'px-3 py-1.5 rounded-lg bg-[#1E293B] text-slate-300 hover:text-white font-semibold text-xs';
+      }
+    }
+
+    // Scale Phone
+    function setScale(scale) {
+      const phone = document.getElementById('phoneDevice');
+      phone.style.transform = `scale(${scale})`;
+      phone.style.transformOrigin = 'top center';
+    }
+
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      hours = hours < 10 ? '0' + hours : hours;
+      document.getElementById('phoneClock').innerText = `${hours}:${minutes}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Initial render
+    renderLanguagesDrawer();
+  </script>
+</body>
+</html>

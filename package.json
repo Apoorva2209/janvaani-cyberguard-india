@@ -1,0 +1,33 @@
+{
+  "name": "cyberguard-india",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Industry-grade cybersecurity scam-detection platform for India",
+  "workspaces": [
+    "packages/shared",
+    "packages/backend",
+    "packages/frontend",
+    "packages/mobile"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w packages/backend\" \"npm run dev -w packages/frontend\"",
+    "mobile:start": "npm run start -w packages/mobile",
+    "mobile:android": "npm run android -w packages/mobile",
+    "mobile:ios": "npm run ios -w packages/mobile",
+    "mobile:web": "npm run web -w packages/mobile",
+    "build": "npm run build -w packages/shared && npm run build -w packages/backend && npm run build -w packages/frontend",
+    "type-check": "npm run type-check --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "db:generate": "npm run db:generate -w packages/backend",
+    "db:migrate": "npm run db:migrate -w packages/backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

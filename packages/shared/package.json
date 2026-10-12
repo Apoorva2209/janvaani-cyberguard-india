@@ -1,0 +1,21 @@
+{
+  "name": "@cyberguard/shared",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types, constants, and utilities for CyberGuard India",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
