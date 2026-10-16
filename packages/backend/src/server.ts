@@ -11,6 +11,7 @@ import { rateLimiter } from './middleware/rate-limiter.js';
 import { checkRoutes } from './routes/check.js';
 import { authRoutes } from './routes/auth.js';
 import { adminRoutes } from './routes/admin.js';
+import { featurePhoneRoutes } from './routes/feature-phone.js';
 
 /**
  * Builds and configures the production-grade Fastify server.
@@ -144,6 +145,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(checkRoutes, { prefix: '/api/v1/check' });
   await app.register(authRoutes, { prefix: '/api/v1/auth' });
   await app.register(adminRoutes, { prefix: '/api/v1/admin' });
+  await app.register(featurePhoneRoutes, { prefix: '/api/v1/feature-phone' });
 
   // ==========================================
   // Health & System Diagnostic Endpoints
