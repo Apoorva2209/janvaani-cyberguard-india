@@ -6,6 +6,20 @@ The project takes inspiration from the citizen participation and learning journe
 
 > **Prototype notice:** JanVaani does not guarantee that it will detect every scam, prove that content is true or false, or identify the real person behind a caller ID or phone number. Do not rely on a result as the sole basis for a financial, emergency, or legal decision.
 
+## Download
+
+Get the latest build from the [Releases page](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/latest).
+
+| Platform | File | How to install |
+| --- | --- | --- |
+| Android | `JanVaani-android.apk` | Open the file on your phone and allow "install unknown apps" when asked |
+| Windows 10/11 | `JanVaani-Setup.exe` | Run the installer. If Windows shows "protected your PC", choose More info, then Run anyway (the installer is self-signed) |
+| macOS | `JanVaani-macos.zip` | Unzip, then right-click the app and choose Open (it is unsigned) |
+| Linux | `JanVaani-linux-*.AppImage` or `.deb` | `chmod +x` the AppImage and run it, or `sudo apt install ./JanVaani-linux-*.deb` |
+| iOS | `JanVaani-ios-simulator.zip` | Simulator build for Mac developers. A build for real iPhones needs an Apple Developer account |
+| Button phones | n/a | Text a suspicious message to the service number. See [Feature phones](#feature-phones-button-phones) |
+
+Android, iOS, Windows and macOS are native React Native apps that share one codebase. The Linux app shows the same screens in an Electron window, because React Native has no Linux target. Builds are produced by the *Build Native Apps* workflow.
 ## The problem
 
 Fraud attempts often impersonate banks, UPI services, police, government departments, delivery companies, or family members. They may pressure someone to act quickly, reveal an OTP or UPI PIN, install a remote-access app, or send money. Language barriers and confusing technical warnings can make it harder to assess a message safely.
@@ -120,6 +134,24 @@ them as included here.
 ### Local containers: caution
 
 The Compose file contains development defaults for local experimentation. Replace every default password with a unique development-only value before running it, keep the services bound to trusted local interfaces, and never reuse those values in a shared or production environment. Review the Compose file and the environment templates before starting containers.
+
+## Feature phones (button phones)
+
+Not everyone has a smartphone, so JanVaani also works over plain SMS and voice calls. The backend exposes Twilio-compatible webhooks under `/api/v1/feature-phone`:
+
+| Endpoint | What a person does | What they get |
+| --- | --- | --- |
+| `POST /sms` | Texts or forwards a suspicious message to the service number | A one-SMS verdict (DANGER / CAUTION / no known signs) with the 1930 helpline |
+| `POST /voice` and `POST /voice/menu` | Calls the service number and uses the keypad | A spoken menu: how to report fraud, safety tips, repeat |
+
+The SMS check reuses the same rule engine as the app, replies in a single 160-character message, and never logs or stores message text. The routes stay off until a provider is connected:
+
+```bash
+FEATURE_PHONE_AUTH_TOKEN=<provider auth token>     # verifies webhook signatures
+FEATURE_PHONE_PUBLIC_URL=https://api.example.in    # public base URL of this API
+```
+
+Point your provider's incoming-SMS and incoming-voice webhooks at the endpoints above. A number and a provider account (for example Twilio, Exotel or Kaleyra) are needed and cost money; none is included in this repository. Voice replies are currently in English only.
 
 ## Languages
 

@@ -7,7 +7,8 @@
     "packages/shared",
     "packages/backend",
     "packages/frontend",
-    "packages/mobile"
+    "packages/mobile",
+    "packages/desktop"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w packages/backend\" \"npm run dev -w packages/frontend\"",
@@ -15,6 +16,8 @@
     "mobile:android": "npm run android -w packages/mobile",
     "mobile:ios": "npm run ios -w packages/mobile",
     "mobile:web": "npm run web -w packages/mobile",
+    "desktop:windows": "npm run windows -w packages/desktop",
+    "desktop:macos": "npm run macos -w packages/desktop",
     "build": "npm run build -w packages/shared && npm run build -w packages/backend && npm run build -w packages/frontend",
     "type-check": "npm run type-check --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
@@ -27,7 +30,15 @@
   "devDependencies": {
     "concurrently": "^9.1.0"
   },
+  "overrides": {
+    "react-native": "0.74.7"
+  },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.74.7",
+    "react-dom": "18.2.0"
   }
 }

@@ -1,0 +1,38 @@
+{
+  "name": "@cyberguard/janvaani-desktop",
+  "version": "1.0.0",
+  "description": "JanVaani native desktop apps (Windows and macOS) built with React Native, sharing the UI from packages/mobile",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "react-native start",
+    "windows": "react-native run-windows",
+    "build:windows": "react-native run-windows --release --no-launch --no-deploy --arch x64 --logging",
+    "macos": "react-native run-macos",
+    "type-check": "tsc --noEmit",
+    "test:windows": "jest --config jest.config.windows.js"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.74.7",
+    "react-native-macos": "^0.74.37",
+    "react-native-windows": "^0.74.59"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/runtime": "^7.24.0",
+    "@react-native-community/cli": "13.6.9",
+    "@react-native-community/cli-platform-android": "13.6.9",
+    "@react-native-community/cli-platform-ios": "13.6.9",
+    "@react-native/babel-preset": "0.74.87",
+    "@react-native/metro-config": "0.74.87",
+    "@react-native/typescript-config": "0.74.87",
+    "@types/react": "~18.2.79",
+    "typescript": "~5.3.3",
+    "@rnx-kit/jest-preset": "^0.1.16"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
