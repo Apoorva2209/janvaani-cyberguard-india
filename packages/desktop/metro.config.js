@@ -5,11 +5,11 @@ const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const root = path.resolve(__dirname, '../..');
 const mobile = path.resolve(__dirname, '../mobile');
-const own = (name) => fs.realpathSync(path.resolve(__dirname, 'node_modules', name));
+// Directory of an installed package, found through Node's resolver (no path building from strings).
+const own = (name) =>
+  fs.realpathSync(path.dirname(require.resolve(`${name}/package.json`, { paths: [__dirname] })));
 
-const rnwPath = fs.realpathSync(
-  path.resolve(require.resolve('react-native-windows/package.json'), '..'),
-);
+const rnwPath = own('react-native-windows');
 
 // The UI lives in packages/mobile, which resolves `react` and `react-native`
 // from the repo root. Force every import onto this package's copies so the
