@@ -266,8 +266,7 @@ jobs:
       - name: Add App Icon
         run: |
           mkdir -p packages/linux/assets
-          # Linux packaging needs at least 256x256; scale the app icon up to 512x512.
-          convert packages/mobile/assets/icon.png -resize 512x512 -background none -gravity center -extent 512x512 packages/linux/assets/icon.png
+          cp packages/mobile/assets/icon.png packages/linux/assets/icon.png
 
       - name: Build AppImage and deb
         working-directory: packages/linux
