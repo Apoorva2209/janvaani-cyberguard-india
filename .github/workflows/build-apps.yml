@@ -5,6 +5,7 @@ name: Build Native Apps
 #   iOS      - Simulator  (React Native / Expo, Xcode, unsigned)
 #   Windows  - App        (React Native for Windows, MSBuild)
 #   macOS    - App        (React Native for macOS, Xcode, unsigned)
+#   Linux    - AppImage and deb (Electron window showing the shared UI)
 # Tag a release (git tag v1.0.0 && git push --tags) to attach the builds to a GitHub release.
 
 on:
@@ -239,10 +240,52 @@ jobs:
           path: JanVaani-macos.zip
           if-no-files-found: error
 
+  linux:
+    name: Linux App (AppImage and deb)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Export Shared App UI for the Web
+        working-directory: packages/mobile
+        run: |
+          npm install --no-save --no-audit --no-fund react-native-web@~0.19.10 react-dom@18.2.0 @expo/metro-runtime@~3.2.3
+          npx expo export --platform web --output-dir ../linux/web
+
+      - name: Add App Icon
+        run: |
+          mkdir -p packages/linux/assets
+          cp packages/mobile/assets/icon.png packages/linux/assets/icon.png
+
+      - name: Build AppImage and deb
+        working-directory: packages/linux
+        run: |
+          npm install --no-audit --no-fund
+          npx electron-builder --linux AppImage deb
+
+      - name: Upload Linux Builds
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: janvaani-linux
+          path: |
+            packages/linux/release/*.AppImage
+            packages/linux/release/*.deb
+          if-no-files-found: error
   release:
     name: Publish GitHub Release
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [android, ios, windows, macos]
+    needs: [android, ios, windows, macos, linux]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -266,4 +309,6 @@ jobs:
             janvaani-android-apk/*.apk \
             janvaani-ios-simulator/*.zip \
             janvaani-windows-setup/JanVaani-Setup.exe \
-            janvaani-macos/*.zip
+            janvaani-macos/*.zip \
+            janvaani-linux/*.AppImage \
+            janvaani-linux/*.deb

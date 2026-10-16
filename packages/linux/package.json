@@ -1,0 +1,35 @@
+{
+  "name": "janvaani-linux",
+  "version": "1.0.0",
+  "description": "JanVaani desktop app for Linux (AppImage and .deb). Shows the shared mobile UI in a locked-down window.",
+  "private": true,
+  "main": "main.js",
+  "author": {
+    "name": "Apoorva SV",
+    "email": "239006279+Apoorva2209@users.noreply.github.com"
+  },
+  "homepage": "https://github.com/Apoorva2209/janvaani-cyberguard-india",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --linux AppImage deb"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "in.janvaani.cybershield",
+    "productName": "JanVaani",
+    "directories": { "output": "release" },
+    "files": ["main.js", "web/**/*", "package.json"],
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility",
+      "icon": "assets/icon.png",
+      "synopsis": "Citizen cyber safety for India",
+      "description": "JanVaani helps you check suspicious messages, links and calls and shows how to report cyber fraud in India."
+    },
+    "artifactName": "JanVaani-linux-${arch}.${ext}"
+  }
+}
