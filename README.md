@@ -16,7 +16,7 @@ JanVaani aims to make the first check understandable: users choose the kind of c
 
 | Package | Purpose | Current state |
 | --- | --- | --- |
-| `packages/mobile` | Android/iOS app built with Expo and React Native | Home, checker, learning, helpline, privacy, and language-picker screens; English and Hindi translation dictionaries; other catalogued languages use an English fallback |
+| `packages/mobile` | Android/iOS app built with Expo and React Native | Home, checker, shield, learning, helpline, privacy, and language-picker screens; English and Hindi translation dictionaries; other catalogued languages use an English fallback. Android native code (`android/.../guard`) adds an on-device guard that screens incoming SMS and notifications with local rules; this is a prototype and has not been independently validated |
 | `packages/frontend` | Next.js web interface | Separate web client for the project; not a native mobile build |
 | `packages/backend` | Fastify API in TypeScript | API routes and modules for checks, authentication, administration, privacy, uploads, and detection orchestration |
 | `packages/shared` | Shared TypeScript types | Types used across workspaces |
