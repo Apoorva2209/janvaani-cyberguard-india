@@ -2,6 +2,11 @@
  * Security-hardened Next.js configuration for CyberGuard India.
  * @type {import('next').NextConfig}
  */
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const contentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline';
@@ -61,6 +66,12 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  // Self-contained server bundle for the Docker image (see Dockerfile).
+  output: 'standalone',
+  experimental: {
+    // Trace dependencies from the monorepo root so the bundle lands in packages/frontend/.
+    outputFileTracingRoot: path.join(dirname, '../../'),
+  },
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
