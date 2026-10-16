@@ -45,7 +45,7 @@ object AlertNotifier {
     val dialPi = PendingIntent.getActivity(ctx, alertId.hashCode() + 1, dial, flags)
 
     val title = if (verdict.level == "HIGH") "⚠️ Likely scam from $source" else "Check carefully: $source message"
-    val who = if (sender.isNotBlank()) "From ${sender.take(40)}. " else ""
+    val who = if (sender.isNotBlank()) "From ${sender.take(40)} (${SenderKind.describe(sender)}). " else "Unknown sender. "
     val why = verdict.tactics.take(2).joinToString(" • ")
     val body = "${who}Warning signs: $why. Don't share OTP/PIN or click links. Tap for details & reporting."
 
