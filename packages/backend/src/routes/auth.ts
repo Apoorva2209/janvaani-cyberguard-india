@@ -116,7 +116,7 @@ function generateTotpCode(secretBase32: string, timeStepWindow: number = 0): str
  * Constant-time comparison between user-provided code and valid codes.
  */
 function verifyTotpSafe(userCode: string, secret: string): boolean {
-  for (let window of [-1, 0, 1]) {
+  for (const window of [-1, 0, 1]) {
     const valid = generateTotpCode(secret, window);
     if (userCode.length === valid.length && timingSafeEqual(Buffer.from(userCode), Buffer.from(valid))) {
       return true;
@@ -269,6 +269,7 @@ export const authRoutes: FastifyPluginAsync = async (fastify): Promise<void> => 
       });
 
       // Constant time protection: dummy compare if user not found to prevent timing oracle
+      // nosemgrep: generic.secrets.security.detected-bcrypt-hash.detected-bcrypt-hash -- placeholder hash, not a credential
       const dummyHash = '$2b$12$e89O1tG2K/x7y5zW3q8Veu1hD6P2B0v6T1q8Veu1hD6P2B0v6T1q8';
       const hashToCompare = user ? user.passwordHash : dummyHash;
       const passwordMatch = await bcrypt.compare(password, hashToCompare);

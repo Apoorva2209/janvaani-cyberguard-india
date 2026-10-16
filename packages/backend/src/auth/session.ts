@@ -125,7 +125,7 @@ export class SessionManager {
     // Retrieve active sessions for user
     const userSessionsKey = `${SESSION_CONFIG.REDIS_PREFIX.USER_SET}${params.userId}`;
     const rawSessionsJson = await this.redis.get(userSessionsKey);
-    let sessionIds: string[] = rawSessionsJson ? JSON.parse(rawSessionsJson) : [];
+    const sessionIds: string[] = rawSessionsJson ? JSON.parse(rawSessionsJson) : [];
 
     // Filter out expired or dead sessions
     const activeSessionIds: string[] = [];
