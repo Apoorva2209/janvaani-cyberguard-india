@@ -42,7 +42,14 @@ Android, iOS, Windows and macOS are native React Native apps that share the scre
 
 On **Android**, JanVaani checks messages on its own as they arrive: SMS, and WhatsApp, Telegram, Gmail, Outlook, Messages and other chat and email apps. Open the app once and it switches the guard on and asks for what it needs: allow SMS and notifications, then switch JanVaani on in Android's *Notification access* screen. Android lets only you grant that last permission. If the switch is greyed out on an app installed from an APK, open *App info → ⋮ → Allow restricted settings* first. A scam-looking message raises an alert at once. Checks run on the phone, and nothing is uploaded.
 
-**iPhone, Windows, macOS and Linux cannot do this.** Those systems do not let an app read other apps' messages or your mailbox, so on them you paste or share a message into JanVaani to check it. Button phones use the SMS service described under [Feature phones](#feature-phones-button-phones).
+**iPhone** does not let any app read other apps' messages, WhatsApp or mail. What Apple does allow, and JanVaani includes, are two extensions (in `packages/mobile/ios-extensions`, added to the iOS build automatically):
+
+- **Message Filter:** moves SMS from unknown senders that look like scams into Messages' *Junk* tab, using the same rules as Android. Turn it on in *Settings → Messages → Unknown & Spam → SMS Filter → JanVaani*. The text never leaves the phone.
+- **Caller Labels:** shows "Suspected scam" on calls from numbers listed in `scam-numbers.txt`. The list ships empty because JanVaani does not invent scam numbers; add verified numbers and rebuild. Turn it on in *Settings → Phone → Call Blocking & Identification*.
+
+Installing on a real iPhone needs an Apple Developer account, so these are built and checked on the simulator only.
+
+**Windows, macOS and Linux cannot do automatic detection either.** Those systems do not let an app read other apps' messages or your mailbox, so on them you paste or share a message into JanVaani to check it. Button phones use the SMS service described under [Feature phones](#feature-phones-button-phones).
 
 ## The problem
 

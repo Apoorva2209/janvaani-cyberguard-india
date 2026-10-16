@@ -97,6 +97,10 @@ jobs:
         working-directory: packages/mobile
         run: npx expo prebuild --platform ios --no-install
 
+      - name: Add iOS Extensions (SMS filter, caller labels)
+        working-directory: packages/mobile
+        run: ruby ios-extensions/add_extensions.rb
+
       - name: Install CocoaPods
         working-directory: packages/mobile/ios
         run: pod install
