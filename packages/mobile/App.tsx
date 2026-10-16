@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   Linking,
   AppState,
   StatusBar,
+  Alert,
 } from 'react-native';
 import { Colors } from './src/theme/colors';
 import { ActiveTab, CheckerModality } from './src/types';
@@ -20,7 +21,13 @@ import { LearnScreen } from './src/screens/LearnScreen';
 import { HelplineScreen } from './src/screens/HelplineScreen';
 import { PrivacyScreen } from './src/screens/PrivacyScreen';
 import { ShieldScreen } from './src/screens/ShieldScreen';
-import { takeSharedText } from './src/services/guardBridge';
+import {
+  getGuardStatus,
+  openNotificationAccessSettings,
+  requestGuardPermissions,
+  setGuardEnabled,
+  takeSharedText,
+} from './src/services/guardBridge';
 
 export default function App() {
   const { t } = useTranslations();
@@ -50,16 +57,46 @@ export default function App() {
     }
   }, []);
 
+  // Automatic protection: switch the guard on and ask for the permissions it needs as soon as the
+  // app opens, instead of waiting for the user to find the Shield tab. Android only lets the user
+  // (not the app) grant notification access, so that last step opens the right settings page.
+  const protectionPrompted = useRef(false);
+  const ensureProtection = useCallback(async () => {
+    const status = await getGuardStatus();
+    if (!status.supported) return;
+    if (!status.enabled) await setGuardEnabled(true);
+    if (!status.smsPermission || !status.notificationPermission) await requestGuardPermissions();
+    const after = await getGuardStatus();
+    if (after.notificationAccess || protectionPrompted.current) return;
+    protectionPrompted.current = true;
+    Alert.alert(
+      'Turn on automatic protection',
+      'To warn you about scam WhatsApp, Gmail and Outlook messages, switch JanVaani ON on the next screen. ' +
+        'Messages are checked on your phone only and nothing is uploaded.\n\n' +
+        'If the switch is greyed out: open App info for JanVaani, tap the ⋮ menu, then "Allow restricted settings".',
+      [
+        { text: 'Later', style: 'cancel' },
+        { text: 'Turn on', onPress: openNotificationAccessSettings },
+      ]
+    );
+  }, []);
+
   useEffect(() => {
     Linking.getInitialURL().then(handleUrl);
     pullShared();
+    ensureProtection();
     const l = Linking.addEventListener('url', (e) => handleUrl(e.url));
-    const a = AppState.addEventListener('change', (s) => s === 'active' && pullShared());
+    const a = AppState.addEventListener('change', (s) => {
+      if (s === 'active') {
+        pullShared();
+        ensureProtection();
+      }
+    });
     return () => {
       l.remove();
       a.remove();
     };
-  }, [handleUrl, pullShared]);
+  }, [handleUrl, pullShared, ensureProtection]);
 
   const handleSelectModality = (modality: CheckerModality) => {
     setActiveModality(modality);

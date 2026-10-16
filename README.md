@@ -38,6 +38,12 @@ Version **1.0.0** is on the [Releases page](https://github.com/Apoorva2209/janva
 
 Android, iOS, Windows and macOS are native React Native apps that share the screens in `packages/mobile`. The Linux app shows those same screens in an Electron window, because React Native has no Linux target. Every file above is built in GitHub Actions by the *Build Native Apps* workflow, and a version tag such as `v1.0.0` publishes them to a release. These builds have not been tested on every device, so treat 1.0.0 as a prototype.
 
+### Automatic protection (no pasting needed)
+
+On **Android**, JanVaani checks messages on its own as they arrive: SMS, and WhatsApp, Telegram, Gmail, Outlook, Messages and other chat and email apps. Open the app once and it switches the guard on and asks for what it needs: allow SMS and notifications, then switch JanVaani on in Android's *Notification access* screen. Android lets only you grant that last permission. If the switch is greyed out on an app installed from an APK, open *App info → ⋮ → Allow restricted settings* first. A scam-looking message raises an alert at once. Checks run on the phone, and nothing is uploaded.
+
+**iPhone, Windows, macOS and Linux cannot do this.** Those systems do not let an app read other apps' messages or your mailbox, so on them you paste or share a message into JanVaani to check it. Button phones use the SMS service described under [Feature phones](#feature-phones-button-phones).
+
 ## The problem
 
 Fraud attempts often impersonate banks, UPI services, police, government departments, delivery companies, or family members. They may pressure someone to act quickly, reveal an OTP or UPI PIN, install a remote-access app, or send money. Language barriers and confusing technical warnings can make it harder to assess a message safely.
