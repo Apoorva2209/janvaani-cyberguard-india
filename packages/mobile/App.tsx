@@ -7,8 +7,8 @@ import {
   Text,
   Linking,
   AppState,
+  StatusBar,
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { Colors } from './src/theme/colors';
 import { ActiveTab, CheckerModality } from './src/types';
 import { useTranslations } from './src/localization/i18n';
@@ -75,7 +75,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" />
+      <StatusBar barStyle="light-content" />
 
       {/* Top Header */}
       <Header onOpenLanguageModal={() => setLangModalVisible(true)} />

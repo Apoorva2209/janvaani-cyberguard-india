@@ -1,0 +1,9 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["index.js", "../mobile/App.tsx", "../mobile/src/**/*"],
+  "exclude": ["node_modules", "windows", "macos"]
+}
