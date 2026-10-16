@@ -1,221 +1,157 @@
-# JanVaani — Cyber Safety for India
+# JanVaani
 
-JanVaani is a cross-platform app and service prototype for helping people assess suspicious calls, SMS/WhatsApp messages, links, and media. It is designed around a simple idea: show people the warning signs, explain why they matter, and give them a safer next step.
+**Cyber safety for India: spot scam messages, links and calls, and know what to do next.**
 
-The project takes inspiration from the citizen participation and learning journeys of MY Bharat and Skill India. It is an independent project: it is not operated, approved, or endorsed by those platforms or by the Government of India.
+[![Security CI](https://github.com/Apoorva2209/janvaani-cyberguard-india/actions/workflows/security.yml/badge.svg)](https://github.com/Apoorva2209/janvaani-cyberguard-india/actions/workflows/security.yml)
+[![Build Native Apps](https://github.com/Apoorva2209/janvaani-cyberguard-india/actions/workflows/build-apps.yml/badge.svg)](https://github.com/Apoorva2209/janvaani-cyberguard-india/actions/workflows/build-apps.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> **Prototype notice:** JanVaani does not guarantee that it will detect every scam, prove that content is true or false, or identify the real person behind a caller ID or phone number. Do not rely on a result as the sole basis for a financial, emergency, or legal decision.
+JanVaani (जनवाणी) shows people the warning signs in a suspicious message, explains why they matter, and points to a safe next step, including the **1930** cyber-fraud helpline. It runs as a native app on Android, iOS, Windows and macOS, as an app on Linux, and through plain SMS and voice calls for people with button phones.
+
+> **Prototype.** JanVaani cannot catch every scam, prove that a message is true or false, or identify the real person behind a number or sender name. Do not rely on a result alone for a financial, emergency or legal decision. It is an independent project and is not operated or endorsed by any government body.
 
 ## Download
 
-Version **1.0.0** is on the [Releases page](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/latest).
+Version **1.0** is on the [Releases page](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/latest).
 
-| Platform | Download | Size |
+| Platform | File | Install |
 | --- | --- | --- |
-| Windows 10 / 11 (64-bit) | [JanVaani-Setup.exe](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-Setup.exe) | 133 MB |
-| Android | [JanVaani-android.apk](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-android.apk) | 60 MB |
-| macOS | [JanVaani-macos.zip](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-macos.zip) | 4 MB |
-| Linux (any distro) | [JanVaani-linux-x86_64.AppImage](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-linux-x86_64.AppImage) | 103 MB |
-| Linux (Debian / Ubuntu) | [JanVaani-linux-amd64.deb](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-linux-amd64.deb) | 71 MB |
-| iOS (Simulator, for Mac developers) | [JanVaani-ios-simulator.zip](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-ios-simulator.zip) | 8 MB |
-| Button (feature) phones | No download. Text a suspicious message to the service number | n/a |
+| Windows 10 / 11 | `JanVaani-Setup.exe` | Run it and accept the administrator prompt. SmartScreen shows "Windows protected your PC" because the installer is self-signed: choose **More info → Run anyway**. Remove it in *Settings → Apps*. |
+| Android | `JanVaani-android.apk` | Open it and allow "install unknown apps". It is signed with a debug key, so it is for testing and sideloading. |
+| macOS | `JanVaani-macos.zip` | Unzip, move to Applications, then right-click → **Open** the first time (unsigned). |
+| Linux | `JanVaani-linux-x86_64.AppImage`, `JanVaani-linux-amd64.deb` | `chmod +x` the AppImage and run it, or `sudo apt install ./JanVaani-linux-amd64.deb`. |
+| iOS | `JanVaani-ios-simulator.zip` | Simulator build for Xcode users. A build for real iPhones needs an Apple Developer account. |
+| Button phones | no download | Text a suspicious message to the service number. See [Button phones](#button-phones). |
 
-### How to install
+## What it does
 
-**Windows.** Run `JanVaani-Setup.exe` and accept the administrator prompt. The installer trusts the app's signing certificate, installs the Windows App Runtime the app depends on, and installs JanVaani. Open it from the Start menu. Remove it from *Settings → Apps*. The installer is signed with a self-made certificate, not one from a certificate authority, so Windows SmartScreen shows "Windows protected your PC": choose **More info**, then **Run anyway**.
+- **Checks a message, link or call description** and lists the warning signs it found, with a plain-language explanation. No result means "no known signs", never "safe".
+- **Detects scams automatically on Android.** It checks incoming SMS and notifications from WhatsApp, Telegram, Gmail, Outlook and other chat and email apps as they arrive, and raises an alert. Everything is checked on the phone and nothing is uploaded.
+- **Describes the sender.** It tells you whether a message came from a business sender ID, an ordinary mobile number, an international number or a short code, and warns when a "bank" writes from a personal number. It never claims to know who the person really is.
+- **Guides reporting.** Official portal and helpline details, plus a complaint kit that collects what you need.
+- **Works in English and Hindi**, with a registry ready for the other 22 scheduled languages.
 
-**Android.** Open the `.apk` on your phone and allow "install unknown apps" for your browser or file manager when asked. The APK is signed with a debug key, so it is for testing and sideloading and cannot be published to the Play Store as is.
+### Automatic protection on Android
 
-**macOS.** Unzip, move `JanVaani.app` to Applications, then right-click it and choose **Open** the first time. The app is unsigned.
+Open the app once. It switches the guard on and asks for SMS and notification permission. One step is yours: switch JanVaani on under Android's *Notification access*, because only you can grant that. If the switch is greyed out for an APK install, open *App info → ⋮ → Allow restricted settings* first.
 
-**Linux.** AppImage: `chmod +x JanVaani-linux-x86_64.AppImage && ./JanVaani-linux-x86_64.AppImage`. Debian/Ubuntu: `sudo apt install ./JanVaani-linux-amd64.deb`.
+### What the other platforms can do
 
-**iOS.** The iOS file is an unsigned simulator build for developers with Xcode. A build for real iPhones needs an Apple Developer account, which this project does not have yet.
-
-**Button phones.** See [Feature phones](#feature-phones-button-phones). This needs a phone number and a telephony provider before it works.
-
-### One codebase, five platforms
-
-Android, iOS, Windows and macOS are native React Native apps that share the screens in `packages/mobile`. The Linux app shows those same screens in an Electron window, because React Native has no Linux target. Every file above is built in GitHub Actions by the *Build Native Apps* workflow, and a version tag such as `v1.0.0` publishes them to a release. These builds have not been tested on every device, so treat 1.0.0 as a prototype.
-
-### Automatic protection (no pasting needed)
-
-On **Android**, JanVaani checks messages on its own as they arrive: SMS, and WhatsApp, Telegram, Gmail, Outlook, Messages and other chat and email apps. Open the app once and it switches the guard on and asks for what it needs: allow SMS and notifications, then switch JanVaani on in Android's *Notification access* screen. Android lets only you grant that last permission. If the switch is greyed out on an app installed from an APK, open *App info → ⋮ → Allow restricted settings* first. A scam-looking message raises an alert at once. Checks run on the phone, and nothing is uploaded.
-
-**iPhone, Windows, macOS and Linux cannot do this.** Those systems do not let an app read other apps' messages or your mailbox, so on them you paste or share a message into JanVaani to check it. Button phones use the SMS service described under [Feature phones](#feature-phones-button-phones).
-
-## The problem
-
-Fraud attempts often impersonate banks, UPI services, police, government departments, delivery companies, or family members. They may pressure someone to act quickly, reveal an OTP or UPI PIN, install a remote-access app, or send money. Language barriers and confusing technical warnings can make it harder to assess a message safely.
-
-JanVaani aims to make the first check understandable: users choose the kind of content they received, provide the text or a description, and receive possible risk indicators with practical safety guidance. Where evidence is missing, the app should say so rather than label a message as definitively genuine or fake.
-
-## What is in this repository
-
-| Package | Purpose | Current state |
+| Platform | Automatic detection | Why |
 | --- | --- | --- |
-| `packages/mobile` | Android/iOS app built with Expo and React Native | Home, checker, shield, learning, helpline, privacy, and language-picker screens; English and Hindi translation dictionaries; other catalogued languages use an English fallback. Android native code (`android/.../guard`) adds an on-device guard that screens incoming SMS and notifications with local rules; this is a prototype and has not been independently validated |
-| `packages/desktop` | Native Windows and macOS apps | React Native for Windows and macOS, importing the screens from `packages/mobile`; the Windows installer script is in `windows/installer` |
-| `packages/linux` | Linux app (AppImage and deb) | Electron window that loads the web export of the shared screens from `packages/mobile` |
-| `packages/frontend` | Next.js web interface | Separate web client for the project; not a native mobile build |
-| `packages/backend` | Fastify API in TypeScript | API routes and modules for checks, authentication, administration, privacy, uploads, detection orchestration, and SMS/voice webhooks for feature phones |
-| `packages/shared` | Shared TypeScript types | Types used across workspaces |
-| `docker-compose.yml` | Local service definitions | PostgreSQL, Redis, MinIO, ClamAV, API, and web services for development experiments |
-| `packages/mobile/docs` | Supporting project documents | Build notes, demo script, integration status, privacy notice, and threat model |
+| Android | Yes (SMS, WhatsApp, Gmail, Outlook and more) | Android allows notification access with your permission |
+| iPhone | Partly: SMS junk filter and caller labels | Apple blocks apps from reading other apps' messages. See [iOS extensions](#ios-extensions). |
+| Windows, macOS, Linux | No. Paste or share a message to check it | These systems do not let an app read your mailbox or other apps' messages |
+| Button phones | Yes, by texting the service number | See [Button phones](#button-phones) |
 
-## How a check works
+### iOS extensions
 
-1. The user selects a content type and enters a message, a call description, a link, or a media description.
-2. The mobile demo runs local heuristic rules against the supplied text and optional claimed-sender details.
-3. The result displays possible warning indicators and a safety explanation. A lack of detected indicators does **not** prove that content is safe.
-4. For suspected financial cyber fraud in India, the app points users to the official [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/) and the 1930 helpline.
+Two Apple-sanctioned extensions are part of the iOS build (source in `packages/mobile/ios-extensions`):
 
-The repository also contains a backend detection pipeline and integration adapters. Their presence in source code does not mean every external service is connected, available, or independently validated.
+- **Message Filter** moves SMS from unknown senders that look like scams into the *Junk* tab, using the same rules as Android. Turn it on in *Settings → Messages → Unknown & Spam → SMS Filter*. The text never leaves the phone.
+- **Caller Labels** shows "Suspected scam" on calls from numbers in `scam-numbers.txt`. The list ships empty because JanVaani does not invent scam numbers. Add numbers you have verified and rebuild. Turn it on in *Settings → Phone → Call Blocking & Identification*.
 
-## Detection and integration status
+### Button phones
 
-| Capability | Status in this codebase |
-| --- | --- |
-| Text-based scam indicators | Local heuristic/rule-based screening is present; it can miss new scams and flag innocent content |
-| Caller identity lookup | Not provided; caller ID and supplied numbers may be spoofed |
-| Language picker | Registry includes the 22 Scheduled Languages and English; full interface translation is currently present for English and Hindi only |
-| BHASHINI | Backend adapter exists, but real use requires valid service access/configuration and end-to-end verification |
-| URL reputation | Backend module exists; confirm provider configuration and live-service behavior before relying on it |
-| Deepfake / media authenticity | Not a guaranteed live detection feature; do not treat a file upload or score as proof |
-| Official-source matching | Backend/source modules exist; confirm the current source data, refresh schedule, and evidence display before deployment |
-| Upload scanning/storage | Integration code and local service definitions exist; security, retention, and end-to-end behavior still require validation |
-
-Treat `packages/mobile/docs/INTEGRATIONS.md` as an implementation inventory to verify, not as independent evidence that every listed service is live in a deployed environment.
-
-## Technology
-
-- **Mobile:** React Native 0.74, Expo SDK 51, TypeScript, Kotlin (Android on-device guard)
-- **Desktop:** React Native for Windows and macOS (0.74), Electron for Linux, Inno Setup for the Windows installer
-- **Web:** Next.js 15, React 18, TypeScript
-- **API:** Node.js 20+, Fastify 5, TypeScript
-- **Data and local services:** PostgreSQL with Prisma, Redis, MinIO-compatible object storage, ClamAV
-- **Language integration path:** BHASHINI adapter on the backend; provider credentials must stay server-side
-- **Automation:** GitHub Actions workflow for checks and security-oriented scanning
-
-These are the technologies configured in this repository; they do not imply production readiness or certification.
-
-## Run locally
-
-### Requirements
-
-- Node.js 20 or later and npm
-- Docker Desktop only if you want to try the services in `docker-compose.yml`
-- Android Studio / Android SDK for local Android emulator builds
-- macOS and Xcode for local iOS builds; alternatively use a correctly configured Expo/EAS build environment
-
-### Install dependencies
-
-From the repository root:
-
-```bash
-npm ci
-```
-
-### Start the app
-
-Start the mobile development server:
-
-```bash
-npm run mobile:start
-```
-
-For a connected Android emulator/device with its native toolchain installed:
-
-```bash
-npm run mobile:android
-```
-
-Start the web frontend and API together:
-
-```bash
-npm run dev
-```
-
-The web workspace uses port 3001 and the API uses port 3000 by default. Set up the relevant local environment files from the provided `.env.example` templates before starting services that require configuration. Never commit `.env` files, access tokens, signing keys, or production credentials.
-
-### Build the apps yourself
-
-You do not need to install any native toolchain to get builds: push a tag (`git tag v1.0.1 && git push --tags`) or run the *Build Native Apps* workflow from the Actions tab. To build locally you need the platform's own tools: Android Studio (Android), Xcode and CocoaPods (iOS and macOS), and Visual Studio 2022 with the Universal Windows Platform and C++ workloads (Windows).
-
-```bash
-npm run desktop:windows   # run the Windows app (on Windows)
-npm run desktop:macos     # run the macOS app (on a Mac)
-```
-
-For more detail, see [mobile build instructions](packages/mobile/docs/BUILD_INSTRUCTIONS.md), [integration notes](packages/mobile/docs/INTEGRATIONS.md), [demo script](packages/mobile/docs/DEMO_SCRIPT.md), [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md), and [threat model](packages/mobile/docs/THREAT_MODEL.md).
-
-## Submission and reviewer materials
-
-- [Technical design and architecture diagram](docs/ARCHITECTURE.md)
-- [Fictional sample cases](docs/sample-cases.json) (contains no real phone numbers, accounts, or citizen messages)
-- [MIT License](LICENSE)
-- Automated backend rule-engine tests: `packages/backend/src/detection/rules.test.ts`
-
-Run the backend unit tests with `npm test -w packages/backend`. The root `test`
-script runs workspace tests where configured; packages without a test script
-are not covered by that command. The GitHub Actions workflow also runs
-dependency/security checks, but a configured workflow is not evidence that its
-latest run passed. Check the repository's Actions tab for the actual run state.
-
-This repository does not include the competition's official presentation
-template, a recorded 3–5 minute video, or a verified enrollment certificate.
-Those must be prepared and uploaded separately by the team. Do not represent
-them as included here.
-
-### Local containers: caution
-
-The Compose file contains development defaults for local experimentation. Replace every default password with a unique development-only value before running it, keep the services bound to trusted local interfaces, and never reuse those values in a shared or production environment. Review the Compose file and the environment templates before starting containers.
-
-## Feature phones (button phones)
-
-Not everyone has a smartphone, so JanVaani also works over plain SMS and voice calls. The backend exposes Twilio-compatible webhooks under `/api/v1/feature-phone`:
+People without a smartphone can use JanVaani by SMS and voice. The backend exposes Twilio-compatible webhooks under `/api/v1/feature-phone`:
 
 | Endpoint | What a person does | What they get |
 | --- | --- | --- |
-| `POST /sms` | Texts or forwards a suspicious message to the service number | A one-SMS verdict (DANGER / CAUTION / no known signs) with the 1930 helpline |
-| `POST /voice` and `POST /voice/menu` | Calls the service number and uses the keypad | A spoken menu: how to report fraud, safety tips, repeat |
+| `POST /sms` | Texts or forwards a suspicious message to the service number | One SMS (under 160 characters): DANGER, CAUTION or no known signs, plus the 1930 helpline |
+| `POST /voice`, `POST /voice/menu` | Calls the number and uses the keypad | A spoken menu: how to report fraud, safety tips, repeat |
 
-The SMS check reuses the same rule engine as the app, replies in a single 160-character message, and never logs or stores message text. The routes stay off until a provider is connected:
+The routes stay off until a provider is connected, and message text is never logged or stored:
 
 ```bash
 FEATURE_PHONE_AUTH_TOKEN=<provider auth token>     # verifies webhook signatures
 FEATURE_PHONE_PUBLIC_URL=https://api.example.in    # public base URL of this API
 ```
 
-Point your provider's incoming-SMS and incoming-voice webhooks at the endpoints above. A number and a provider account (for example Twilio, Exotel or Kaleyra) are needed and cost money; none is included in this repository. Voice replies are currently in English only.
+A phone number and a provider account (for example Twilio, Exotel or Kaleyra) are needed and cost money; none is included here. Voice replies are English only for now.
 
-## Languages
+## How a check works
 
-The mobile language registry lists the 22 Scheduled Languages and English, including native names and script metadata. The shipped translation dictionaries currently cover English and Hindi. Other languages use an English fallback and are marked as not yet human-reviewed. The registry is a foundation for broader language support, not a claim that all Indian languages and dialects are already translated or accurately analyzed.
+1. You pick the kind of content and enter or share the text.
+2. Local rules look for known scam patterns: OTP and UPI PIN requests, digital-arrest threats, fake KYC and account blocks, prize lures, task scams, fake parcels, lookalike links and more.
+3. The result shows the warning signs found. Finding none does **not** prove the content is safe.
+4. For suspected financial fraud the app points to the [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/) and the **1930** helpline.
 
-Safety-critical translations should be reviewed by fluent speakers before public use. Machine translation and speech recognition can make mistakes, especially with code-mixed speech, dialects, noisy recordings, and uncommon terms.
+## Project layout
+
+One repository, npm workspaces:
+
+| Package | What it is | Stack |
+| --- | --- | --- |
+| `packages/mobile` | The Android and iOS apps and the shared screens | React Native 0.74, Expo 51, TypeScript, Kotlin (Android guard), Swift (iOS extensions) |
+| `packages/desktop` | Native Windows and macOS apps, plus the Windows installer script | React Native for Windows and macOS, Inno Setup |
+| `packages/linux` | Linux app (AppImage, deb) | Electron window showing the shared screens, because React Native has no Linux target |
+| `packages/backend` | API: checks, accounts, uploads, detection, SMS and voice webhooks | Fastify 5, TypeScript, Prisma, PostgreSQL, Redis, MinIO, ClamAV |
+| `packages/frontend` | Web client | Next.js 15, React 18, Tailwind CSS |
+| `packages/shared` | Shared TypeScript types | TypeScript |
+
+Android, iOS, Windows and macOS are native apps built from the same screens. All of them are built in GitHub Actions by the *Build Native Apps* workflow, and a version tag such as `v1.0.0` publishes the files to a release.
+
+## Run it locally
+
+You need Node.js 20+ and npm. Docker is only needed for the backend services.
+
+```bash
+npm ci                    # install everything
+cp .env.example .env      # then replace every placeholder secret
+
+npm run mobile:start      # mobile app (Expo dev server)
+npm run mobile:android    # Android emulator or device (needs the Android SDK)
+npm run dev               # API (port 3000) and web client (port 3001)
+npm run desktop:windows   # Windows app (needs Visual Studio 2022 with UWP and C++)
+npm run desktop:macos     # macOS app (needs Xcode and CocoaPods)
+```
+
+Tests and checks: `npm test`, `npm run lint`, `npm run type-check`.
+
+You can also skip local toolchains: run the *Build Native Apps* workflow from the Actions tab, or push a tag (`git tag v1.0.1 && git push --tags`).
+
+The Docker Compose file contains development defaults. Replace every default password with a unique value before starting it, keep services on trusted local interfaces, and never reuse those values anywhere shared or in production.
+
+More detail: [mobile build notes](packages/mobile/docs/BUILD_INSTRUCTIONS.md), [integrations](packages/mobile/docs/INTEGRATIONS.md), [demo script](packages/mobile/docs/DEMO_SCRIPT.md), [architecture](docs/ARCHITECTURE.md), [sample cases](docs/sample-cases.json) (fictional data only).
+
+## Status of each capability
+
+| Capability | Status |
+| --- | --- |
+| Text scam indicators | Local rule-based checks. Can miss new scams and flag innocent text. |
+| Sender identity | Not provided. Only the kind of sender ID is described, and numbers can be spoofed. |
+| Languages | English and Hindi are translated. The other scheduled languages fall back to English until reviewed by fluent speakers. |
+| BHASHINI translation | Backend adapter exists. Needs service access and end-to-end verification. |
+| URL reputation | Backend module exists. Confirm provider configuration before relying on it. |
+| Deepfake / media authenticity | Not a live feature. A file upload or score is not proof. |
+| Upload scanning and storage | Code and local services exist. Security and retention still need validation. |
+
+The repository has not had an independent security audit, penetration test or government approval.
 
 ## Security and privacy
 
-- Do not enter OTPs, UPI PINs, passwords, CVVs, Aadhaar details, or bank login information.
-- Do not upload private documents or media unless you understand where they will be processed and stored.
-- Never put secrets in frontend code or commit local environment files.
-- Treat user-submitted text, links, and files as untrusted input.
-- Review the [threat model](packages/mobile/docs/THREAT_MODEL.md) and [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md) before using this project with real users.
-- The repository has not received an independent security audit, penetration test, or government approval. Configuration and safeguards must be reviewed before deployment.
+- Never enter OTPs, UPI PINs, passwords, CVVs, Aadhaar details or bank logins into any app, including this one.
+- Message checks on Android and iOS happen on the device. The SMS and voice service does not log or store message text.
+- Treat all submitted text, links and files as untrusted input. Never commit `.env` files or secrets.
+- Read the [threat model](packages/mobile/docs/THREAT_MODEL.md) and [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md) before using this with real users.
+- Found a vulnerability? Open a private security advisory on GitHub instead of a public issue.
 
 ## Roadmap
 
-1. Validate the mobile and API flows end to end with fictional test cases.
-2. Review English and Hindi safety content and establish a human translation workflow for more Indian languages.
-3. Connect and verify BHASHINI and reputable URL-reputation services through backend adapters.
-4. Add specialist audio/video analysis only with clear user consent, documented limits, and human review for consequential cases.
-5. Complete security, privacy, accessibility, and deployment reviews before any real-world launch.
+1. Test every flow end to end on real devices with fictional cases.
+2. Have fluent speakers review the English and Hindi safety text, then add more languages.
+3. Connect and verify BHASHINI and a reputable URL-reputation service.
+4. Publish signed builds: Google Play, Apple App Store and a trusted Windows certificate.
+5. Complete security, privacy, accessibility and deployment reviews before any real-world launch.
 
 ## Contributing
 
-For a hackathon contribution, describe the user problem, the package changed, how you checked it, and any external service or credential required. Use fictional data in examples. Do not submit real citizens' messages, phone numbers, credentials, or private media.
+Describe the user problem, the package you changed, how you checked it, and any service or credential it needs. Use fictional data in examples. Never submit real people's messages, phone numbers, credentials or private media.
 
-## Reporting suspected cyber fraud in India
+## If you have been scammed
 
-Use the official [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/). For financial cyber fraud, call **1930** as soon as possible. JanVaani is an information aid; it does not file a complaint on the user's behalf.
+Call **1930** as soon as possible, then report at the official [National Cyber Crime Reporting Portal](https://cybercrime.gov.in/). The sooner you call after losing money, the better the chance of stopping the transfer. JanVaani is an information aid; it does not file a complaint for you.
+
+## License and author
+
+Released under the [MIT License](LICENSE). Built by **Apoorva SV** ([@Apoorva2209](https://github.com/Apoorva2209)).
