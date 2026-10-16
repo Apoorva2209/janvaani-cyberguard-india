@@ -17,6 +17,21 @@ class MainActivity : ReactActivity() {
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null)
+    captureSharedText(intent)
+  }
+
+  override fun onNewIntent(intent: android.content.Intent) {
+    super.onNewIntent(intent)
+    setIntent(intent)
+    captureSharedText(intent)
+  }
+
+  /** "Share to JanVaani" — hold shared text for JS to pick up via JanVaaniGuard.takeSharedText(). */
+  private fun captureSharedText(intent: android.content.Intent?) {
+    if (intent?.action == android.content.Intent.ACTION_SEND && intent.type == "text/plain") {
+      `in`.janvaani.cybershield.guard.GuardModule.pendingShare =
+        intent.getStringExtra(android.content.Intent.EXTRA_TEXT)?.take(4000)
+    }
   }
 
   /**

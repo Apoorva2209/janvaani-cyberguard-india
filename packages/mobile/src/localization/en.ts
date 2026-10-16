@@ -92,6 +92,7 @@ export const en = {
     principle3Desc: 'We do not build public suspect lists, accuse individuals, or track your ongoing device location.',
   },
   tabs: {
+    shield: 'Alerts',
     check: 'Check',
     learn: 'Learn',
     helpline: '1930 Help',

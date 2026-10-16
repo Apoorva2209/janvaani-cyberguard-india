@@ -14,14 +14,6 @@
 *.crt
 *.pfx
 *.p12
-*.keystore
-*.jks
-
-# Android local build/signing material
-android/.gradle/
-android/app/build/
-android/build/
-ios/Pods/
 
 # ------------------------------------------------------------------------------
 # 2. DEPENDENCY & PACKAGE DIRECTORIES
@@ -90,3 +82,11 @@ desktop.ini
 *.sublime-workspace
 *.swp
 *.swo
+
+# Expo cache and local Claude settings
+.expo/
+.claude/settings.local.json
+
+# Android debug keystore and Claude config
+*.keystore
+.claude/

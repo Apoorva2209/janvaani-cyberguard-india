@@ -14,19 +14,22 @@ import { AnalysisOutcome, CheckerModality } from '../types';
 import { useTranslations } from '../localization/i18n';
 import { analyzeSuspiciousContent } from '../services/heuristicEngine';
 import { ResultCard } from '../components/ResultCard';
+import { ReportPanel } from '../components/ReportPanel';
 
 interface CheckerScreenProps {
   initialModality: CheckerModality;
+  initialContent?: string;
   onBack: () => void;
 }
 
 export const CheckerScreen: React.FC<CheckerScreenProps> = ({
   initialModality,
+  initialContent,
   onBack,
 }) => {
   const { t } = useTranslations();
   const [modality, setModality] = useState<CheckerModality>(initialModality);
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<string>(initialContent ?? '');
   const [claimedSender, setClaimedSender] = useState<string>('');
   const [claimedNumber, setClaimedNumber] = useState<string>('');
   const [selectedState, setSelectedState] = useState<string>('');
@@ -113,6 +116,16 @@ export const CheckerScreen: React.FC<CheckerScreenProps> = ({
               setContent('');
             }}
           />
+          {(outcome.label === 'HIGH_RISK' || outcome.label === 'CHECK_CAREFULLY') && (
+            <ReportPanel
+              input={{
+                source: modality === 'call' ? 'Phone call' : modality === 'link' ? 'Link' : 'Message',
+                sender: claimedNumber || claimedSender,
+                messageText: content,
+                outcome,
+              }}
+            />
+          )}
         </View>
       ) : (
         /* Evaluation Intake Form */

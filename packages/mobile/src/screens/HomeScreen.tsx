@@ -125,6 +125,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <Text style={styles.footerNoticeText}>
           {t.app.disclaimerBanner}
         </Text>
+        <Text style={styles.creditText}>App by Apoorva SV</Text>
       </View>
     </ScrollView>
   );
@@ -278,6 +279,13 @@ const styles = StyleSheet.create({
   footerNotice: {
     paddingHorizontal: 20,
     marginTop: 20,
+  },
+  creditText: {
+    color: Colors.textSecondary,
+    fontSize: 11,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginTop: 10,
   },
   footerNoticeText: {
     color: Colors.textMuted,

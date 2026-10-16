@@ -29,10 +29,12 @@
         "backgroundColor": "#0A1128"
       },
       "package": "in.janvaani.cybershield",
+      "blockedPermissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "READ_CONTACTS", "READ_SMS"],
       "permissions": [
-        "READ_EXTERNAL_STORAGE",
         "CAMERA",
-        "RECORD_AUDIO"
+        "RECORD_AUDIO",
+        "RECEIVE_SMS",
+        "POST_NOTIFICATIONS"
       ]
     },
     "web": {

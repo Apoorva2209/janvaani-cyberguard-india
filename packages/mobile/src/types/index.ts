@@ -1,4 +1,4 @@
-/**
+﻿/**
  * JanVaani Mobile - Core Data Contracts and Interfaces
  */
 
@@ -73,4 +73,4 @@ export interface SafeHabitsLesson {
   quiz: QuizQuestion;
 }
 
-export type ActiveTab = 'check' | 'learn' | 'helpline' | 'privacy';
+export type ActiveTab = 'shield' | 'check' | 'learn' | 'helpline' | 'privacy';

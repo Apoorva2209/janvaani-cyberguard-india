@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
   SafeAreaView,
   TouchableOpacity,
   Text,
+  Linking,
+  AppState,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from './src/theme/colors';
@@ -17,6 +19,8 @@ import { CheckerScreen } from './src/screens/CheckerScreen';
 import { LearnScreen } from './src/screens/LearnScreen';
 import { HelplineScreen } from './src/screens/HelplineScreen';
 import { PrivacyScreen } from './src/screens/PrivacyScreen';
+import { ShieldScreen } from './src/screens/ShieldScreen';
+import { takeSharedText } from './src/services/guardBridge';
 
 export default function App() {
   const { t } = useTranslations();
@@ -24,6 +28,38 @@ export default function App() {
   const [activeModality, setActiveModality] = useState<CheckerModality | null>(null);
   const [langModalVisible, setLangModalVisible] = useState<boolean>(false);
   const [, setLangRefresh] = useState<number>(0);
+  const [focusAlertId, setFocusAlertId] = useState<string | null>(null);
+  const [sharedText, setSharedText] = useState<string | undefined>(undefined);
+
+  // Notification tap -> in.janvaani.cybershield://alert/<id>
+  const handleUrl = useCallback((url: string | null) => {
+    const m = url?.match(/^in\.janvaani\.cybershield:\/\/alert\/([0-9a-f-]{36})$/i);
+    if (m?.[1]) {
+      setFocusAlertId(m[1]);
+      setActiveTab('shield');
+    }
+  }, []);
+
+  // Text shared from WhatsApp/Gmail/etc. -> open the message checker pre-filled
+  const pullShared = useCallback(async () => {
+    const text = await takeSharedText();
+    if (text) {
+      setSharedText(text);
+      setActiveTab('check');
+      setActiveModality('message');
+    }
+  }, []);
+
+  useEffect(() => {
+    Linking.getInitialURL().then(handleUrl);
+    pullShared();
+    const l = Linking.addEventListener('url', (e) => handleUrl(e.url));
+    const a = AppState.addEventListener('change', (s) => s === 'active' && pullShared());
+    return () => {
+      l.remove();
+      a.remove();
+    };
+  }, [handleUrl, pullShared]);
 
   const handleSelectModality = (modality: CheckerModality) => {
     setActiveModality(modality);
@@ -49,8 +85,13 @@ export default function App() {
         {activeTab === 'check' && (
           activeModality ? (
             <CheckerScreen
+              key={sharedText ?? activeModality}
               initialModality={activeModality}
-              onBack={handleBackToHome}
+              initialContent={sharedText}
+              onBack={() => {
+                setSharedText(undefined);
+                handleBackToHome();
+              }}
             />
           ) : (
             <HomeScreen
@@ -58,6 +99,10 @@ export default function App() {
               onNavigateToLearn={() => setActiveTab('learn')}
             />
           )
+        )}
+
+        {activeTab === 'shield' && (
+          <ShieldScreen focusAlertId={focusAlertId} onFocusHandled={() => setFocusAlertId(null)} />
         )}
 
         {activeTab === 'learn' && <LearnScreen />}
@@ -69,6 +114,17 @@ export default function App() {
 
       {/* Accessible Bottom Navigation Bar */}
       <View style={styles.bottomNav}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => setActiveTab('shield')}
+          accessibilityRole="tab"
+          accessibilityLabel={t.tabs.shield}
+        >
+          <Text style={[styles.navIcon, activeTab === 'shield' && styles.navIconActive]}>🚨</Text>
+          <Text style={[styles.navLabel, activeTab === 'shield' && styles.navLabelActive]}>
+            {t.tabs.shield}
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => {

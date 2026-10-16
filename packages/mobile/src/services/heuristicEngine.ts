@@ -147,12 +147,8 @@ export function analyzeSuspiciousContent(params: {
 
     // UPI PIN to Receive / Fake Lottery
     if (
-      lower.includes('lottery') ||
-      lower.includes('won') ||
-      lower.includes('cashback') ||
-      lower.includes('reward') ||
-      lower.includes('enter upi pin to receive') ||
-      lower.includes('scan qr to receive')
+      /\b(lottery|jackpot|you\s+(have\s+)?won|cash\s*prize|lucky\s+draw|cashback|reward)\b/.test(lower) ||
+      /(upi\s*pin|scan.{0,15}qr).{0,40}\b(receive|claim|get)\b/.test(lower)
     ) {
       evidenceClues.push({
         tactic: 'Fake Prize / UPI PIN Reverse Charge',
@@ -181,6 +177,75 @@ export function analyzeSuspiciousContent(params: {
         quote: extractQuote(content, ['part-time job', 'work from home', 'telegram', 'earn']),
         explanation:
           'Promises lucrative daily income for liking videos or rating hotels, later requiring "investment deposits" before withholding all money.',
+        severity: 'high',
+      });
+    }
+  }
+
+  // 2b. Messages and emails often carry the same tactics as calls, plus links.
+  if (modality === 'message') {
+    const crossChecks: Array<[RegExp, EvidenceClue]> = [
+      [
+        /\b(share|send|tell|enter|provide|forward)\b.{0,30}\b(otp|upi\s*pin|atm\s*pin|cvv|password|mpin)\b/,
+        {
+          tactic: 'Secret Credential Solicitation',
+          explanation: 'The message asks for an OTP, PIN or password. Banks and government offices never ask for these.',
+          severity: 'high',
+        },
+      ],
+      [
+        /digital\s*arrest|\b(cbi|ncb|narcotics|crime\s*branch|customs)\b.{0,60}\b(arrest|warrant|case|parcel|video\s*call)/,
+        {
+          tactic: 'Law Enforcement Coercion & Digital Arrest Threat',
+          explanation: 'Claims police or agency action. "Digital arrest" does not exist under Indian law.',
+          severity: 'high',
+        },
+      ],
+      [
+        /\b(anydesk|teamviewer|quick\s*support|rustdesk|airdroid)\b|\.apk\b/,
+        {
+          tactic: 'Remote-Access App or APK Install',
+          explanation: 'Asks you to install a remote-access app or an APK file, which can take over your phone and read OTPs.',
+          severity: 'high',
+        },
+      ],
+      [
+        /\b(kyc|pan|aadhaar)\b.{0,40}\b(update|expire|block|suspend)|\b(account|sim|card)\b.{0,20}\b(blocked|suspended|deactivated)/,
+        {
+          tactic: 'Urgent Service Suspension Threat',
+          explanation: 'Creates panic that your account, card or SIM will be blocked unless you act now.',
+          severity: 'medium',
+        },
+      ],
+      [
+        /\b(parcel|courier|fedex|dhl|india\s*post)\b.{0,60}\b(held|seized|pending|undelivered|customs|fee)/,
+        {
+          tactic: 'Fake Parcel / Courier Hold',
+          explanation: 'Claims a parcel is held and asks for a fee or details. A common lead-in to digital arrest and phishing.',
+          severity: 'medium',
+        },
+      ],
+      [
+        /\b(bit\.ly|tinyurl\.com|is\.gd|t\.ly|cutt\.ly|rb\.gy|shorturl\.at)\//,
+        {
+          tactic: 'Obfuscated Shortened Link',
+          explanation: 'A shortened link hides the real website. Do not open it.',
+          severity: 'medium',
+        },
+      ],
+    ];
+    for (const [re, clue] of crossChecks) {
+      const m = lower.match(re);
+      if (m && !evidenceClues.some((c) => c.tactic === clue.tactic)) {
+        evidenceClues.push({ ...clue, quote: extractQuote(content, [m[0].split(/\s+/)[0] ?? m[0]]) });
+      }
+    }
+    const lookalike = findLookalikeHost(lower);
+    if (lookalike) {
+      evidenceClues.push({
+        tactic: 'Deceptive Lookalike Domain',
+        quote: `"${lookalike}"`,
+        explanation: 'The link uses a bank or government name but is not that organisation’s official website.',
         severity: 'high',
       });
     }
@@ -299,6 +364,23 @@ export function analyzeSuspiciousContent(params: {
       'JanVaani provides informational safety indicators to help citizens make informed decisions. It does not file official police complaints or replace formal investigation.',
     timestamp: `${dateStr} ${nowStr}`,
   };
+}
+
+const BRAND_RE = /sbi|hdfc|icici|axis|kotak|paytm|phonepe|npci|incometax|pmkisan|pm-kisan|epfo|uidai|aadhaar|indiapost/;
+const OFFICIAL_HOSTS = [
+  'gov.in', 'nic.in', 'bank.in', 'onlinesbi.sbi', 'sbi.co.in', 'hdfcbank.com', 'icicibank.com',
+  'axisbank.com', 'kotak.com', 'paytm.com', 'phonepe.com', 'npci.org.in',
+];
+
+/** Returns the first link host that borrows a bank/government brand without being its official domain. */
+export function findLookalikeHost(text: string): string | null {
+  for (const m of text.matchAll(/https?:\/\/([^\s/:?#]+)/g)) {
+    const host = (m[1] ?? '').toLowerCase();
+    if (BRAND_RE.test(host) && !OFFICIAL_HOSTS.some((h) => host === h || host.endsWith(`.${h}`))) {
+      return host;
+    }
+  }
+  return null;
 }
 
 function extractQuote(text: string, keywords: string[]): string {
