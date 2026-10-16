@@ -23,6 +23,7 @@ import {
   setGuardEnabled,
   simulateAlert,
 } from '../services/guardBridge';
+import { profileSender, SENDER_DISCLAIMER } from '../services/senderProfile';
 import { analyzeSuspiciousContent } from '../services/heuristicEngine';
 import { ResultCard } from '../components/ResultCard';
 import { ReportPanel } from '../components/ReportPanel';
@@ -73,6 +74,11 @@ export const ShieldScreen: React.FC<ShieldScreenProps> = ({ focusAlertId, onFocu
     [selected]
   );
 
+  const senderInfo = useMemo(
+    () => (selected ? profileSender(selected.sender, selected.excerpt) : null),
+    [selected]
+  );
+
   if (selected && outcome) {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -86,6 +92,17 @@ export const ShieldScreen: React.FC<ShieldScreenProps> = ({ focusAlertId, onFocu
           </Text>
           <Text style={styles.msgText} selectable>
             {selected.excerpt}
+          </Text>
+        </View>
+        <View style={[styles.card, senderInfo?.suspicious && styles.senderWarn]}>
+          <Text style={styles.h2}>Who sent this?</Text>
+          <Text style={styles.cardText}>
+            <Text style={{ fontWeight: '700' }}>{senderInfo?.label}</Text>
+            {selected.sender ? `  (${selected.sender})` : ''}
+            {'\n'}
+            {senderInfo?.note}
+            {'\n\n'}
+            {SENDER_DISCLAIMER}
           </Text>
         </View>
         <ResultCard outcome={outcome} onReset={() => setSelected(null)} />
@@ -291,6 +308,7 @@ const styles = StyleSheet.create({
   heroTitle: { color: Colors.white, fontSize: 17, fontWeight: '900' },
   heroSub: { color: Colors.textPrimary, fontSize: 11.5, lineHeight: 16, marginTop: 2, opacity: 0.85 },
   card: { backgroundColor: Colors.surface, borderColor: Colors.border, borderWidth: 1, borderRadius: 14, padding: 14 },
+  senderWarn: { borderColor: Colors.riskHigh, borderWidth: 1 },
   cardText: { color: Colors.textSecondary, fontSize: 12.5, lineHeight: 18 },
   setupRow: {
     flexDirection: 'row',

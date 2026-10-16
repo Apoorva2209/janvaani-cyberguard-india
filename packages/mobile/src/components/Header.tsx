@@ -37,6 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLanguageModal }) => {
               </View>
             </View>
             <Text style={styles.brandSubtitle}>जनवाणी • Citizen Cyber Shield</Text>
+            <Text style={styles.creditText}>Done by Apoorva SV</Text>
           </View>
         </View>
 
@@ -150,6 +151,13 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     fontSize: 11,
     marginTop: 1,
+  },
+  creditText: {
+    color: Colors.textSecondary,
+    fontSize: 10,
+    fontWeight: '600',
+    marginTop: 1,
+    opacity: 0.85,
   },
   actionsRow: {
     flexDirection: 'row',
