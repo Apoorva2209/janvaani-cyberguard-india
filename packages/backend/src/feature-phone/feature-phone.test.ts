@@ -43,7 +43,8 @@ describe('feature phone SMS reply', () => {
 });
 
 describe('Twilio webhook helpers', () => {
-  const token = 'test-token';
+  // Random per run, so no key is hardcoded in the repository.
+  const token = crypto.randomBytes(16).toString('hex');
   const url = 'https://api.example.in/api/v1/feature-phone/sms';
   const params = { Body: 'hello', From: '+910000000000' };
   const sign = (u: string, p: Record<string, string>) =>
