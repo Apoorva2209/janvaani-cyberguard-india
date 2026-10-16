@@ -1,0 +1,4 @@
+# Verified scam phone numbers, one per line: country code plus number, digits only (no "+").
+# Example format (this is NOT a real number):  919999999999
+# Lines starting with # are ignored. Only add numbers you have verified, for example from an
+# official complaint or advisory, because callers will see the label "Suspected scam".
