@@ -8,18 +8,36 @@ The project takes inspiration from the citizen participation and learning journe
 
 ## Download
 
-Get the latest build from the [Releases page](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/latest).
+Version **1.0.0** is on the [Releases page](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/latest).
 
-| Platform | File | How to install |
+| Platform | Download | Size |
 | --- | --- | --- |
-| Android | `JanVaani-android.apk` | Open the file on your phone and allow "install unknown apps" when asked |
-| Windows 10/11 | `JanVaani-Setup.exe` | Run the installer. If Windows shows "protected your PC", choose More info, then Run anyway (the installer is self-signed) |
-| macOS | `JanVaani-macos.zip` | Unzip, then right-click the app and choose Open (it is unsigned) |
-| Linux | `JanVaani-linux-*.AppImage` or `.deb` | `chmod +x` the AppImage and run it, or `sudo apt install ./JanVaani-linux-*.deb` |
-| iOS | `JanVaani-ios-simulator.zip` | Simulator build for Mac developers. A build for real iPhones needs an Apple Developer account |
-| Button phones | n/a | Text a suspicious message to the service number. See [Feature phones](#feature-phones-button-phones) |
+| Windows 10 / 11 (64-bit) | [JanVaani-Setup.exe](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-Setup.exe) | 133 MB |
+| Android | [JanVaani-android.apk](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-android.apk) | 60 MB |
+| macOS | [JanVaani-macos.zip](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-macos.zip) | 4 MB |
+| Linux (any distro) | [JanVaani-linux-x86_64.AppImage](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-linux-x86_64.AppImage) | 103 MB |
+| Linux (Debian / Ubuntu) | [JanVaani-linux-amd64.deb](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-linux-amd64.deb) | 71 MB |
+| iOS (Simulator, for Mac developers) | [JanVaani-ios-simulator.zip](https://github.com/Apoorva2209/janvaani-cyberguard-india/releases/download/v1.0.0/JanVaani-ios-simulator.zip) | 8 MB |
+| Button (feature) phones | No download. Text a suspicious message to the service number | n/a |
 
-Android, iOS, Windows and macOS are native React Native apps that share one codebase. The Linux app shows the same screens in an Electron window, because React Native has no Linux target. Builds are produced by the *Build Native Apps* workflow.
+### How to install
+
+**Windows.** Run `JanVaani-Setup.exe` and accept the administrator prompt. The installer trusts the app's signing certificate, installs the Windows App Runtime the app depends on, and installs JanVaani. Open it from the Start menu. Remove it from *Settings → Apps*. The installer is signed with a self-made certificate, not one from a certificate authority, so Windows SmartScreen shows "Windows protected your PC": choose **More info**, then **Run anyway**.
+
+**Android.** Open the `.apk` on your phone and allow "install unknown apps" for your browser or file manager when asked. The APK is signed with a debug key, so it is for testing and sideloading and cannot be published to the Play Store as is.
+
+**macOS.** Unzip, move `JanVaani.app` to Applications, then right-click it and choose **Open** the first time. The app is unsigned.
+
+**Linux.** AppImage: `chmod +x JanVaani-linux-x86_64.AppImage && ./JanVaani-linux-x86_64.AppImage`. Debian/Ubuntu: `sudo apt install ./JanVaani-linux-amd64.deb`.
+
+**iOS.** The iOS file is an unsigned simulator build for developers with Xcode. A build for real iPhones needs an Apple Developer account, which this project does not have yet.
+
+**Button phones.** See [Feature phones](#feature-phones-button-phones). This needs a phone number and a telephony provider before it works.
+
+### One codebase, five platforms
+
+Android, iOS, Windows and macOS are native React Native apps that share the screens in `packages/mobile`. The Linux app shows those same screens in an Electron window, because React Native has no Linux target. Every file above is built in GitHub Actions by the *Build Native Apps* workflow, and a version tag such as `v1.0.0` publishes them to a release. These builds have not been tested on every device, so treat 1.0.0 as a prototype.
+
 ## The problem
 
 Fraud attempts often impersonate banks, UPI services, police, government departments, delivery companies, or family members. They may pressure someone to act quickly, reveal an OTP or UPI PIN, install a remote-access app, or send money. Language barriers and confusing technical warnings can make it harder to assess a message safely.
@@ -31,8 +49,10 @@ JanVaani aims to make the first check understandable: users choose the kind of c
 | Package | Purpose | Current state |
 | --- | --- | --- |
 | `packages/mobile` | Android/iOS app built with Expo and React Native | Home, checker, shield, learning, helpline, privacy, and language-picker screens; English and Hindi translation dictionaries; other catalogued languages use an English fallback. Android native code (`android/.../guard`) adds an on-device guard that screens incoming SMS and notifications with local rules; this is a prototype and has not been independently validated |
+| `packages/desktop` | Native Windows and macOS apps | React Native for Windows and macOS, importing the screens from `packages/mobile`; the Windows installer script is in `windows/installer` |
+| `packages/linux` | Linux app (AppImage and deb) | Electron window that loads the web export of the shared screens from `packages/mobile` |
 | `packages/frontend` | Next.js web interface | Separate web client for the project; not a native mobile build |
-| `packages/backend` | Fastify API in TypeScript | API routes and modules for checks, authentication, administration, privacy, uploads, and detection orchestration |
+| `packages/backend` | Fastify API in TypeScript | API routes and modules for checks, authentication, administration, privacy, uploads, detection orchestration, and SMS/voice webhooks for feature phones |
 | `packages/shared` | Shared TypeScript types | Types used across workspaces |
 | `docker-compose.yml` | Local service definitions | PostgreSQL, Redis, MinIO, ClamAV, API, and web services for development experiments |
 | `packages/mobile/docs` | Supporting project documents | Build notes, demo script, integration status, privacy notice, and threat model |
@@ -63,9 +83,10 @@ Treat `packages/mobile/docs/INTEGRATIONS.md` as an implementation inventory to v
 
 ## Technology
 
-- **Mobile:** React Native 0.74, Expo SDK 51, TypeScript
-- **Web:** Next.js 14, React, TypeScript
-- **API:** Node.js 20+, Fastify 4, TypeScript
+- **Mobile:** React Native 0.74, Expo SDK 51, TypeScript, Kotlin (Android on-device guard)
+- **Desktop:** React Native for Windows and macOS (0.74), Electron for Linux, Inno Setup for the Windows installer
+- **Web:** Next.js 15, React 18, TypeScript
+- **API:** Node.js 20+, Fastify 5, TypeScript
 - **Data and local services:** PostgreSQL with Prisma, Redis, MinIO-compatible object storage, ClamAV
 - **Language integration path:** BHASHINI adapter on the backend; provider credentials must stay server-side
 - **Automation:** GitHub Actions workflow for checks and security-oriented scanning
@@ -110,6 +131,15 @@ npm run dev
 ```
 
 The web workspace uses port 3001 and the API uses port 3000 by default. Set up the relevant local environment files from the provided `.env.example` templates before starting services that require configuration. Never commit `.env` files, access tokens, signing keys, or production credentials.
+
+### Build the apps yourself
+
+You do not need to install any native toolchain to get builds: push a tag (`git tag v1.0.1 && git push --tags`) or run the *Build Native Apps* workflow from the Actions tab. To build locally you need the platform's own tools: Android Studio (Android), Xcode and CocoaPods (iOS and macOS), and Visual Studio 2022 with the Universal Windows Platform and C++ workloads (Windows).
+
+```bash
+npm run desktop:windows   # run the Windows app (on Windows)
+npm run desktop:macos     # run the macOS app (on a Mac)
+```
 
 For more detail, see [mobile build instructions](packages/mobile/docs/BUILD_INSTRUCTIONS.md), [integration notes](packages/mobile/docs/INTEGRATIONS.md), [demo script](packages/mobile/docs/DEMO_SCRIPT.md), [privacy notice](packages/mobile/docs/PRIVACY_NOTICE.md), and [threat model](packages/mobile/docs/THREAT_MODEL.md).
 
